@@ -1,6 +1,6 @@
 import arcade
 
-from classes.player import Player
+from classes.Player import Player
 
 
 class Page1Home():
@@ -48,4 +48,8 @@ class Page1Home():
             if abs(analogValue) <= 0.2:
                 analogValue = 0
             self.player.speed_y = -analogValue
+        if axisName == "RX":
+            self.player.view_x = analogValue
+        if axisName == "RY":
+            self.player.view_y = analogValue
 
