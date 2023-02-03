@@ -30,7 +30,7 @@ class Page1Home():
         self.player = Player( initPos=(500,500) )
 
     def update(self, deltaTime):
-        pass
+        self.player.update(deltaTime)
 
     def draw(self):
         self.player.draw()
@@ -41,8 +41,11 @@ class Page1Home():
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
         if axisName == "X":
-            self.player.move(analogValue, 0)
+            if abs(analogValue) <= 0.2:
+                analogValue = 0
+            self.player.speed_x = analogValue
         if axisName == "Y":
-            self.player.move(0, analogValue)
-
+            if abs(analogValue) <= 0.2:
+                analogValue = 0
+            self.player.speed_y = -analogValue
 
