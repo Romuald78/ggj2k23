@@ -1,5 +1,6 @@
 import arcade
 
+from classes.player import Player
 
 
 class Page1Home():
@@ -26,15 +27,22 @@ class Page1Home():
         self.H = h
 
     def setup(self):
-        pass
+        self.player = Player( initPos=(500,500) )
 
     def update(self, deltaTime):
         pass
 
     def draw(self):
-        pass
+        self.player.draw()
 
 
     def onKeyEvent(self, key, isPressed):
         pass
+
+    def onAxisEvent(self, gamepadNum, axisName, analogValue):
+        if axisName == "X":
+            self.player.move(analogValue, 0)
+        if axisName == "Y":
+            self.player.move(0, analogValue)
+
 

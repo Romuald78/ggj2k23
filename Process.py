@@ -2,7 +2,7 @@
 ### IMPORTS
 ### ====================================================================================================
 
-from core.pages.page_1_home import Page1Home
+from pages.page_1_home import Page1Home
 
 
 class Process:
