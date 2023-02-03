@@ -2,7 +2,7 @@
 ### IMPORTS
 ### ====================================================================================================
 import arcade
-from core.Process import Process
+from Process import Process
 import os
 
 ### ====================================================================================================
@@ -216,7 +216,7 @@ class MyGame(arcade.Window):
 ### ====================================================================================================
 def main():
     # add current file path
-    file_path = os.path.join( os.path.dirname(os.path.abspath(__file__)), '..')
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '')
     os.chdir(file_path)
 
     game = MyGame(1920, 1080, 0.8, TITLE)
