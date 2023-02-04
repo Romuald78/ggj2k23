@@ -2,11 +2,14 @@ import random
 
 import arcade
 
+from classes.Branch import Branch
+from classes.BranchManager import BranchManager
 from classes.Camera import Camera
 from classes.Collisions import CollisionMgr
 from classes.EnemyManager import EnemyManager
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
+from classes.Root import Root
 from core.utils import utils
 from core.utils.utils import Gfx
 
@@ -32,6 +35,15 @@ class Page1Home():
         self.collMgrEnemy = CollisionMgr(self.enemyProjectileManager.projs,
                                     [self.player])
 
+        self.branchMgr = BranchManager()
+
+
+
+
+        self.TST_branch = Branch( (250, 500), 0, self.branchMgr, self.player )
+
+
+
 
     def update(self, deltaTime):
         self.player.update(deltaTime)
@@ -39,15 +51,24 @@ class Page1Home():
         self.enemyProjectileManager.update(deltaTime)
         self.enemyManager.update(deltaTime)
         self.collMgr.update()
+        self.branchMgr.update(deltaTime)
         self.camera.update( self.player.bodyL.center_x,
                             self.player.bodyL.center_y )
 
-    def draw(self):
-        self.player.draw()
-        self.playerProjectileManager.draw()
-        self.enemyProjectileManager.draw()
-        self.enemyManager.draw()
 
+
+
+        self.TST_branch.update(deltaTime)
+
+
+
+
+    def draw(self):
+        self.branchMgr.draw()
+        self.enemyManager.draw()
+        self.enemyProjectileManager.draw()
+        self.playerProjectileManager.draw()
+        self.player.draw()
 
     def onKeyEvent(self, key, isPressed):
         if key == arcade.key.Q :
