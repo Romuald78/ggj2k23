@@ -27,7 +27,7 @@ class ProjectileManager():
         sprite.center_y += PROJ_SPEED * sprite.direction[1] * deltaTime
         # Remove sprite if life time is over
         sprite.lifeTime -= deltaTime
-        if sprite.lifeTime <= 0:
+        if sprite.lifeTime <= 0 or sprite.hp <= 0:
             self.projs.remove(sprite)
 
     def createProjectile(self, initPos=(0,0), direction=(1,0), projectile=PLAYER_PROJ):
@@ -39,6 +39,7 @@ class ProjectileManager():
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
         sprite.lifeTime = 0.5
+        sprite.hp = 1
         sprite.angle = 180 * math.atan2(dy,dx) / math.pi
         sprite.direction = (dx,dy)
         self.projs.append(sprite)
