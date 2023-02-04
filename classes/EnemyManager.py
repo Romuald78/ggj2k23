@@ -10,17 +10,16 @@ MAIN_ENEMY = "main_enemy"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class EnemyManager():
 
-    def __init__(self):
+    def __init__(self, camera):
         self.enemies = arcade.SpriteList()
         self.defines = {
             MAIN_ENEMY: {
                 "path":"resources/images/enemy.png"
             }
         }
-        self.SPAWN_TIME = 1 # secondes betwwen enemy spawn
+        self.SPAWN_TIME = 0.25 # secondes betwwen enemy spawn
         self.lastSpawn = 0
-        self.W = 1000 #change
-        self.H = 1000 #change
+        self.camera = camera
 
     def createEnemy(self, initPos=(0,0), enemy=MAIN_ENEMY):
         # add randomness for projectile (10%)
@@ -44,8 +43,17 @@ class EnemyManager():
 
         if self.lastSpawn > self.SPAWN_TIME:
             self.lastSpawn -= self.SPAWN_TIME
-            self.createEnemy((random.randint(0,self.W),random.randint(0,self.H)))
 
+            radius  = max(self.camera.W, self.camera.H)/2
+            delta   = min(self.camera.W, self.camera.H)/2
+            radius += random.randint(0, delta)
+            ang     = random.randint(0, 360)
+            x = radius * math.cos(ang*math.pi/180) + self.camera.x
+            y = radius * math.sin(ang*math.pi/180) + self.camera.y
+
+            self.createEnemy( (x,y) )
+
+        # TODO
 
     def draw(self):
         self.enemies.draw()
