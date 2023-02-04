@@ -7,9 +7,10 @@ from core.utils.utils import Gfx
 
 class Player(IGunner,IDamage):
 
-    def __init__(self, projectileManager, initPos=(0, 0)):
+    def __init__(self, projectileManager, initPos=(0, 0),maxHP = 500):
+        self.maxHP = maxHP
         IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
-        IDamage.__init__(self,500,2)
+        IDamage.__init__(self,maxHP,2)
         playerSize = 70;
         params = {
             "filePath": "resources/images/player.png",
@@ -144,12 +145,6 @@ class Player(IGunner,IDamage):
 
     def getBody(self):
         return self.bodyL
-
-    def reduceHP(self, dmg):
-        IDamage.reduceHP(self,dmg)
-        if(self.hp < 0):
-            print("You Died")
-            self.hp += 100000000
 
     def isMoving(self):
         return self.speed_x != 0 or self.speed_y !=0 or self.moveL or self.moveR or self.moveD or self.moveU
