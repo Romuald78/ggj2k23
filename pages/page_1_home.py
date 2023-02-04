@@ -1,5 +1,6 @@
 import arcade
 
+from classes.EnemyManager import EnemyManager
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
 
@@ -29,15 +30,22 @@ class Page1Home():
 
     def setup(self):
         self.playerProjectileManager = ProjectileManager()
+        self.enemyProjectileManager = ProjectileManager()
+        self.enemyManager = EnemyManager()
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
+        self.enemyManager.createEnemy((100,100))
 
     def update(self, deltaTime):
         self.player.update(deltaTime)
         self.playerProjectileManager.update(deltaTime)
+        self.enemyProjectileManager.update(deltaTime)
+        self.enemyManager.update(deltaTime)
 
     def draw(self):
         self.player.draw()
         self.playerProjectileManager.draw()
+        self.enemyProjectileManager.draw()
+        self.enemyManager.draw()
 
     def onKeyEvent(self, key, isPressed):
         if key == arcade.key.Q :
