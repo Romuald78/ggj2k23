@@ -4,7 +4,7 @@ import random
 import arcade
 
 from classes import Camera
-from core.utils.utils import Gfx
+from core.utils.utils import Gfx, Sound
 
 
 class Background:
@@ -22,18 +22,20 @@ class Background:
         })
 
     def mkItem(self):
-        idx = random.randint(0,8)
+        idx = random.randint(0,3)
         return Gfx.create_animated({
             "filePath": "resources/images/background_items.png",
             "size": (60, 60),
             "filterColor": (255, 255, 255, 255),
-            "spriteBox":(3,3,540//3,540//3),
+            "spriteBox":(4,1,480//4,86),
             "startIndex":idx,
             "endIndex":idx,
             "frameDuration":1,
         })
 
     def __init__(self, camera: Camera, size=3000):
+        sound = arcade.load_sound("resources/sound/VampireSurvivorGGJ-1.mp3")
+        arcade.play_sound(sound,1.0,0.0,True)
         self.tiles = arcade.SpriteList()
         self.deco = arcade.SpriteList()
         self.camera = camera

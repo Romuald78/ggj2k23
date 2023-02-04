@@ -7,6 +7,7 @@ from classes.BranchManager import BranchManager
 from classes.BackGround import Background
 from classes.Camera import Camera
 from classes.Collisions import CollisionMgr
+from classes.Countdown import Countdown
 from classes.EnemyManager import EnemyManager
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
@@ -14,7 +15,6 @@ from classes.Root import Root
 
 
 class Page1Home():
-
 
     def __init__(self, w, h, window: arcade.Window):
         super().__init__()
@@ -24,29 +24,22 @@ class Page1Home():
 
     def setup(self):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
+        self.countdown = Countdown(self.camera, (0, (self.H // 2) - 50))
         self.playerProjectileManager = ProjectileManager(2000)
         self.enemyProjectileManager = ProjectileManager(1000)
-        self.player = Player( self.playerProjectileManager, initPos=(500,500) )
+        self.player = Player(self.playerProjectileManager, initPos=(500, 500))
         self.branchMgr = BranchManager()
         self.enemyManager = EnemyManager(self.camera,
                                          self.enemyProjectileManager,
                                          self.branchMgr,
                                          self.player)
 
-
         self.collMgr = CollisionMgr(self.playerProjectileManager.projs,
                                     self.enemyManager.enemies)
-        self.collMgrEnemy = CollisionMgr([self.player.getBody()] , self.enemyProjectileManager.projs)
+        self.collMgrEnemy = CollisionMgr([self.player.getBody()], self.enemyProjectileManager.projs)
         self.background = Background(self.camera)
 
-
-
-
-
-        self.TST_branch = Branch( (250, 500), 0, self.branchMgr, self.player )
-
-
-
+        self.TST_branch = Branch((250, 500), 0, self.branchMgr, self.player)
 
     def update(self, deltaTime):
         self.background.update(deltaTime)
@@ -57,16 +50,11 @@ class Page1Home():
         self.collMgr.update()
         self.branchMgr.update(deltaTime)
         self.collMgrEnemy.update()
-        self.camera.update( self.player.bodyL.center_x,
-                            self.player.bodyL.center_y )
+        self.camera.update(self.player.bodyL.center_x,
+                           self.player.bodyL.center_y)
 
-
-
-
+        self.countdown.update(deltaTime)
         self.TST_branch.update(deltaTime)
-
-
-
 
     def draw(self):
         self.background.draw()
@@ -75,15 +63,16 @@ class Page1Home():
         self.enemyProjectileManager.draw()
         self.playerProjectileManager.draw()
         self.player.draw()
+        self.countdown.draw()
 
     def onKeyEvent(self, key, isPressed):
-        if key == arcade.key.Q :
+        if key == arcade.key.Q:
             self.player.moveLeft(isPressed)
-        if key == arcade.key.D :
+        if key == arcade.key.D:
             self.player.moveRight(isPressed)
-        if key == arcade.key.Z :
+        if key == arcade.key.Z:
             self.player.moveUp(isPressed)
-        if key == arcade.key.S :
+        if key == arcade.key.S:
             self.player.moveDown(isPressed)
 
     def onMouseMotionEvent(self, x, y, dx, dy):
@@ -102,4 +91,3 @@ class Page1Home():
             self.player.view_x = analogValue
         if axisName == "RY":
             self.player.view_y = analogValue
-
