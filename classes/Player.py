@@ -1,10 +1,11 @@
 import math
 
+from classes.ProjectileManager import PLAYER_PROJ
 from core.utils.utils import Gfx
 
 class Player():
 
-    def __init__(self, initPos=(0,0)):
+    def __init__(self,projectileManager, initPos=(0,0)):
         params = {
             "filePath" : "resources/images/player.png",
             "size" : (200,200),
@@ -30,6 +31,10 @@ class Player():
         self.speed_x = 0
         self.speed_y = 0
         self.SPEED = 750
+        self.projectileManager = projectileManager
+        self.FIRE_RATE = 0.2 #s between proj
+        self.PROJ_SPEED = 10 #kiwi per ms
+        self.lastProj = 0
 
         # life point
         self.life = 100
@@ -44,6 +49,7 @@ class Player():
         return not self.isAlive()
 
     def update(self, deltaTime):
+        self.lastProj += deltaTime
         self.bodyL.center_x += self.speed_x * self.SPEED * deltaTime
         self.bodyL.center_y += self.speed_y * self.SPEED * deltaTime
         self.bodyR.center_x = self.bodyL.center_x
@@ -56,6 +62,13 @@ class Player():
         ang = 180 * math.atan2(-self.view_y, self.view_x) / math.pi
         self.gunL.angle = ang+180
         self.gunR.angle = ang
+
+        if self.lastProj > self.FIRE_RATE:
+            self.lastProj -= self.FIRE_RATE
+            self.projectileManager.createProjectile(
+                (self.bodyR.center_x,self.bodyR.center_y),
+                ( 1 * self.PROJ_SPEED, 0 * self.PROJ_SPEED),
+                PLAYER_PROJ)
 
     def draw(self):
         if self.view_x >= 0:

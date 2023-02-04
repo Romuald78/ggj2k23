@@ -1,6 +1,7 @@
 import arcade
 
 from classes.Player import Player
+from classes.ProjectileManager import ProjectileManager
 
 
 class Page1Home():
@@ -27,13 +28,16 @@ class Page1Home():
         self.H = h
 
     def setup(self):
-        self.player = Player( initPos=(500,500) )
+        self.playerProjectileManager = ProjectileManager()
+        self.player = Player( self.playerProjectileManager, initPos=(500,500) )
 
     def update(self, deltaTime):
         self.player.update(deltaTime)
+        self.playerProjectileManager.update(deltaTime)
 
     def draw(self):
         self.player.draw()
+        self.playerProjectileManager.draw()
 
 
     def onKeyEvent(self, key, isPressed):

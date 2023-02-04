@@ -9,7 +9,7 @@ class ProjectileManager():
         self.projs = arcade.SpriteList()
         self.defines = {
             PLAYER_PROJ: {
-                "path":"resources/images/gun.png"
+                "path":"resources/images/player_projectile.png"
             },
         }
 
@@ -26,8 +26,8 @@ class ProjectileManager():
 
     def update(self ,deltaTime):
         for sprite in self.projs:
-            sprite.center_x = sprite.center_x + sprite.speed[0]
-            sprite.center_y = sprite.center_y + sprite.speed[1]
+            sprite.center_x += sprite.speed[0]
+            sprite.center_y += sprite.speed[1]
         self.projs.update()
 
     def draw(self):
