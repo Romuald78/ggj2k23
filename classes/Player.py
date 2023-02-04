@@ -6,7 +6,7 @@ from core.utils.utils import Gfx
 
 class Player(IGunner):
 
-    
+
 
     def __init__(self, projectileManager, initPos=(0, 0)):
         super().__init__(PLAYER_PROJ, projectileManager, 0.1)

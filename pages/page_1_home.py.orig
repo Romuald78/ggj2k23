@@ -24,8 +24,12 @@ class Page1Home():
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
         self.playerProjectileManager = ProjectileManager()
         self.enemyProjectileManager = ProjectileManager()
+<<<<<<< HEAD
+=======
+        self.enemyManager = EnemyManager(self.camera, self.enemyProjectileManager)
+>>>>>>> ce6a0957136b3e44256072c8c96724653e9d6726
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
-        self.enemyManager = EnemyManager(self.camera, self.enemyProjectileManager,self.player)
+        self.enemyManager = EnemyManager(self.enemyProjectileManager,self.player)
 
         self.collMgr = CollisionMgr(self.playerProjectileManager.projs,
                                     self.enemyManager.enemies)
