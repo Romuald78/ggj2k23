@@ -2,8 +2,9 @@ import math
 import random
 
 import arcade
+from arcade import Camera
 
-from classes import Player
+from classes import Player, ProjectileManager
 from classes.Enemy import Enemy
 
 MAIN_ENEMY = "main_enemy"
@@ -12,7 +13,8 @@ MAIN_ENEMY = "main_enemy"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class EnemyManager():
 
-    def __init__(self, camera, projectileManager, player):
+    def __init__(self, camera:Camera, projectileManager:ProjectileManager, player:Player):
+        self.activated = True #for dev
         self.enemies = arcade.SpriteList()
         self.defines = {
             MAIN_ENEMY: {
@@ -26,6 +28,8 @@ class EnemyManager():
         self.player = player
 
     def createEnemy(self, initPos=(0, 0), enemy=MAIN_ENEMY):
+        if( not self.activated):
+            return
         # add randomness for projectile (10%)
         enemy_ = self.defines[enemy]
         sprite = arcade.Sprite(enemy_["path"], scale=0.1)

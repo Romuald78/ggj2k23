@@ -8,8 +8,6 @@ from classes.Collisions import CollisionMgr
 from classes.EnemyManager import EnemyManager
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
-from core.utils import utils
-from core.utils.utils import Gfx
 
 
 class Page1Home():
@@ -32,7 +30,7 @@ class Page1Home():
         self.collMgr = CollisionMgr(self.playerProjectileManager.projs,
                                     self.enemyManager.enemies)
         self.collMgrEnemy = CollisionMgr([self.player.getBody()] , self.enemyProjectileManager.projs)
-        self.background = Background()
+        self.background = Background(self.camera)
 
 
     def update(self, deltaTime):

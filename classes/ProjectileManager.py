@@ -13,7 +13,7 @@ PROJ_SPEED = 2000
 class ProjectileManager():
 
     def __init__(self):
-        self.activated = False #for dev
+        self.activated = True #for dev
         self.projs = arcade.SpriteList()
         self.defines = {
             PLAYER_PROJ: {
