@@ -67,4 +67,4 @@ class Root():
 
     def destroy(self):
         self.mustBeDestroyed = True
-        self.sprite.color = (255,128,128)
+        self.sprite.color = (128,64,64)
