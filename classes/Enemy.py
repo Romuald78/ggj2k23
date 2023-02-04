@@ -22,6 +22,7 @@ class Enemy(IDamage,IGunner):
 
     def destroy(self):
         self.mustBeDestroyed = True
+        self.sprite.color = (200,128,128)
         for b in self.branches:
             b.destroy()
 

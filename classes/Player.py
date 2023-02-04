@@ -11,7 +11,7 @@ class Player(IGunner,IDamage):
         self.maxHP = maxHP
         IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
         IDamage.__init__(self,maxHP,2)
-        playerSize = 70;
+        playerSize = 163;
         params = {
             "filePath": "resources/images/player.png",
             "size": (playerSize, playerSize),
