@@ -1,7 +1,6 @@
 import arcade
 
-from classes.ProjectileManager import ProjectileManager
-from classes.player import Player
+from classes.Player import Player
 
 
 class Page1Home():
@@ -29,16 +28,12 @@ class Page1Home():
 
     def setup(self):
         self.player = Player( initPos=(500,500) )
-        self.projectileManager = ProjectileManager()
-        self.projectileManager.createProjectile()
 
     def update(self, deltaTime):
         self.player.update(deltaTime)
-        self.projectileManager.update(deltaTime)
 
     def draw(self):
         self.player.draw()
-        self.projectileManager.draw()
 
 
     def onKeyEvent(self, key, isPressed):
@@ -53,4 +48,8 @@ class Page1Home():
             if abs(analogValue) <= 0.2:
                 analogValue = 0
             self.player.speed_y = -analogValue
+        if axisName == "RX":
+            self.player.view_x = analogValue
+        if axisName == "RY":
+            self.player.view_y = analogValue
 

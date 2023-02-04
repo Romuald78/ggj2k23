@@ -1,3 +1,5 @@
+import math
+
 from core.utils.utils import Gfx
 
 class Player():
@@ -21,11 +23,25 @@ class Player():
         self.gunR = Gfx.create_fixed(params)
         params["flipH"] = True
         self.gunL = Gfx.create_fixed(params)
+
+        # move and view
         self.view_x = 0
         self.view_y = 0
         self.speed_x = 0
         self.speed_y = 0
         self.SPEED = 750
+
+        # life point
+        self.life = 100
+
+        # shooting
+        self.isShooting = False
+
+    def isAlive(self):
+        return self.life > 0
+
+    def isDead(self):
+        return not self.isAlive()
 
     def update(self, deltaTime):
         self.bodyL.center_x += self.speed_x * self.SPEED * deltaTime
@@ -37,6 +53,9 @@ class Player():
         self.gunR.center_x = self.bodyL.center_x
         self.gunR.center_y = self.bodyL.center_y
 
+        ang = 180 * math.atan2(-self.view_y, self.view_x) / math.pi
+        self.gunL.angle = ang+180
+        self.gunR.angle = ang
 
     def draw(self):
         if self.view_x >= 0:
