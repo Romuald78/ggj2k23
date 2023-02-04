@@ -29,7 +29,11 @@ class Page1Home():
         self.playerProjectileManager = ProjectileManager(2000)
         self.enemyProjectileManager = ProjectileManager(1000)
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
-        self.enemyManager = EnemyManager(self.camera, self.enemyProjectileManager,self.player)
+        self.branchMgr = BranchManager()
+        self.enemyManager = EnemyManager(self.camera,
+                                         self.enemyProjectileManager,
+                                         self.branchMgr,
+                                         self.player)
 
 
         self.collMgr = CollisionMgr(self.playerProjectileManager.projs,
@@ -37,7 +41,6 @@ class Page1Home():
         self.collMgrEnemy = CollisionMgr([self.player.getBody()] , self.enemyProjectileManager.projs)
         self.background = Background()
 
-        self.branchMgr = BranchManager()
 
 
 
