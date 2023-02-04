@@ -10,8 +10,13 @@ MAIN_ENEMY = "main_enemy"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class EnemyManager():
 
+<<<<<<< HEAD
     def __init__(self,projectileManager):
+        self.enemy = arcade.SpriteList()
+=======
+    def __init__(self):
         self.enemies = arcade.SpriteList()
+>>>>>>> 313420ea5e9d5bf5c12afd95795e848006a4368b
         self.defines = {
             MAIN_ENEMY: {
                 "path":"resources/images/enemy.png"
@@ -29,8 +34,13 @@ class EnemyManager():
         sprite = arcade.Sprite(enemy_["path"],scale=0.1)
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
-        sprite.enemy = Enemy(sprite)
+<<<<<<< HEAD
+        sprite.enemy = Enemy(sprite,self.projectileManager)
+        self.enemy.append(sprite)
+=======
+        sprite.userData = Enemy(sprite)
         self.enemies.append(sprite)
+>>>>>>> 313420ea5e9d5bf5c12afd95795e848006a4368b
 
     def __updateOneSprite(self, sprite, deltaTime):
         # Remove sprite if life time is over

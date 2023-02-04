@@ -1,0 +1,28 @@
+
+<<<<<<< HEAD
+=======
+from classes.IDamage import IDamage
+from classes.ProjectileManager import PLAYER_PROJ
+from core.utils.utils import Gfx
+>>>>>>> 313420ea5e9d5bf5c12afd95795e848006a4368b
+
+class Enemy(IDamage):
+
+<<<<<<< HEAD
+    def __init__(self, sprite, projectileManager, hp = 20):
+        self.hp = hp
+        self.projectileManager = projectileManager
+        pass
+=======
+    def __init__(self, sprite, hp = 20, dmg=1):
+        super().__init__(hp, dmg)
+>>>>>>> 313420ea5e9d5bf5c12afd95795e848006a4368b
+
+    def update(self, deltaTime):
+        pass
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 313420ea5e9d5bf5c12afd95795e848006a4368b
+

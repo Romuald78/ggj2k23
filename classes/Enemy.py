@@ -1,14 +1,13 @@
 
+from classes.IDamage import IDamage
 
-class Enemy():
+class Enemy(IDamage):
 
-    def __init__(self, sprite, projectileManager, hp = 20):
-        self.hp = hp
+    def __init__(self, sprite, projectileManager, hp = 20, dmg = 1):
+        super().__init__(hp, dmg)
         self.projectileManager = projectileManager
-        pass
 
     def update(self, deltaTime):
         pass
-
 
 
