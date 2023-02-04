@@ -26,15 +26,14 @@ class Player():
         self.gunL = Gfx.create_fixed(params)
 
         # move and view
-        self.view_x = 0
+        self.view_x = 1
         self.view_y = 0
         self.speed_x = 0
         self.speed_y = 0
         self.SPEED = 750
         self.projectileManager = projectileManager
-        self.FIRE_RATE = 0.2 #s between proj
-        self.PROJ_SPEED = 10 #kiwi per ms
-        self.lastProj = 0
+        self.FIRE_RATE = 0.1 #s between proj
+        self.shootTimer = 0
 
         # life point
         self.life = 100
@@ -49,7 +48,7 @@ class Player():
         return not self.isAlive()
 
     def update(self, deltaTime):
-        self.lastProj += deltaTime
+        self.shootTimer += deltaTime
         self.bodyL.center_x += self.speed_x * self.SPEED * deltaTime
         self.bodyL.center_y += self.speed_y * self.SPEED * deltaTime
         self.bodyR.center_x = self.bodyL.center_x
@@ -63,11 +62,12 @@ class Player():
         self.gunL.angle = ang+180
         self.gunR.angle = ang
 
-        if self.lastProj > self.FIRE_RATE:
-            self.lastProj -= self.FIRE_RATE
+        if self.shootTimer > self.FIRE_RATE:
+            norm = math.sqrt(self.view_x*self.view_x + self.view_y*self.view_y)
+            self.shootTimer -= self.FIRE_RATE
             self.projectileManager.createProjectile(
                 (self.bodyR.center_x,self.bodyR.center_y),
-                ( 1 * self.PROJ_SPEED, 0 * self.PROJ_SPEED),
+                (self.view_x/norm, -self.view_y/norm),
                 PLAYER_PROJ)
 
     def draw(self):

@@ -45,11 +45,11 @@ class Page1Home():
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
         if axisName == "X":
-            if abs(analogValue) <= 0.2:
+            if abs(analogValue) <= 0.15:
                 analogValue = 0
             self.player.speed_x = analogValue
         if axisName == "Y":
-            if abs(analogValue) <= 0.2:
+            if abs(analogValue) <= 0.15:
                 analogValue = 0
             self.player.speed_y = -analogValue
         if axisName == "RX":
