@@ -39,9 +39,18 @@ class Page1Home():
         self.player.draw()
         self.playerProjectileManager.draw()
 
-
     def onKeyEvent(self, key, isPressed):
-        pass
+        if key == arcade.key.Q :
+            self.player.moveLeft(isPressed)
+        if key == arcade.key.D :
+            self.player.moveRight(isPressed)
+        if key == arcade.key.Z :
+            self.player.moveUp(isPressed)
+        if key == arcade.key.S :
+            self.player.moveDown(isPressed)
+
+    def onMouseMotionEvent(self, x, y, dx, dy):
+        self.player.viewTo(x, y)
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
         if axisName == "X":

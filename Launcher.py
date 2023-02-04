@@ -2,6 +2,8 @@
 ### IMPORTS
 ### ====================================================================================================
 import arcade
+import pyglet.input
+
 from Process import Process
 import os
 

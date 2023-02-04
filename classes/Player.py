@@ -25,6 +25,11 @@ class Player():
         params["flipH"] = True
         self.gunL = Gfx.create_fixed(params)
 
+        # Keyboard
+        self.moveL = False
+        self.moveR = False
+        self.moveU = False
+        self.moveD = False
         # move and view
         self.view_x = 1
         self.view_y = 0
@@ -41,6 +46,24 @@ class Player():
         # shooting
         self.isShooting = False
 
+    def moveLeft(self, isEnabled):
+        self.moveL = isEnabled
+    def moveRight(self, isEnabled):
+        self.moveR = isEnabled
+    def moveUp(self, isEnabled):
+        self.moveU = isEnabled
+    def moveDown(self, isEnabled):
+        self.moveD = isEnabled
+
+    def viewTo(self, x, y):
+        dx = x - self.bodyL.center_x
+        dy = -y + self.bodyL.center_y
+        norm = math.sqrt(self.view_x * self.view_x + self.view_y * self.view_y)
+        dx /= norm
+        dy /= norm
+        self.view_x = dx
+        self.view_y = dy
+
     def isAlive(self):
         return self.life > 0
 
@@ -48,6 +71,20 @@ class Player():
         return not self.isAlive()
 
     def update(self, deltaTime):
+        # keyboard
+        if self.moveL == self.moveR:
+            self.speed_x = 0
+        elif self.moveL:
+            self.speed_x = -1
+        elif self.moveR:
+            self.speed_x = 1
+        if self.moveU == self.moveD:
+            self.speed_y = 0
+        elif self.moveU:
+            self.speed_y = 1
+        elif self.moveD:
+            self.speed_y = -1
+
         self.shootTimer += deltaTime
         self.bodyL.center_x += self.speed_x * self.SPEED * deltaTime
         self.bodyL.center_y += self.speed_y * self.SPEED * deltaTime

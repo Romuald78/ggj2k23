@@ -34,7 +34,7 @@ class ProjectileManager():
         sprite = arcade.Sprite(projectile_["path"])
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
-        sprite.lifeTime = 1
+        sprite.lifeTime = 0.5
         sprite.angle = 180 * math.atan2(dy,dx) / math.pi
         sprite.direction = (dx,dy)
         self.projs.append(sprite)
