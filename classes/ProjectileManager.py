@@ -11,7 +11,7 @@ ENEMY_PROJ = "enemy_proj"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class ProjectileManager():
 
-    def __init__(self, proj_speed=1000):
+    def __init__(self, proj_speed=(1000,1000)):
         self.activated = True #for dev
         self.projs = arcade.SpriteList()
         self.defines = {
@@ -30,14 +30,14 @@ class ProjectileManager():
 
     def __updateOneSprite(self, sprite, deltaTime):
         # Move sprite
-        sprite.center_x += self.proj_speed * sprite.direction[0] * deltaTime
-        sprite.center_y += self.proj_speed * sprite.direction[1] * deltaTime
+        sprite.center_x += (self.proj_speed[0]+sprite.parentSpeed[0]) * sprite.direction[0] * deltaTime
+        sprite.center_y += (self.proj_speed[1]+sprite.parentSpeed[1]) * sprite.direction[1] * deltaTime
         # Remove sprite if life time is over
         sprite.lifeTime -= deltaTime
         if sprite.lifeTime <= 0 or sprite.userData.hp <= 0:
             self.projs.remove(sprite)
 
-    def createProjectile(self, initPos=(0,0), direction=(1,0), projectile=PLAYER_PROJ):
+    def createProjectile(self, initPos=(0,0), direction=(1,0), projectile=PLAYER_PROJ, parentSpeed=(0,0)):
         if(not self.activated):
             return
         # add randomness for projectile (10%)
@@ -47,6 +47,7 @@ class ProjectileManager():
         sprite = arcade.Sprite(projectile_["path"])
         sprite.color = projectile_["color"]
         sprite.scale = projectile_["scale"]
+        sprite.parentSpeed = parentSpeed
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
         sprite.lifeTime = 2.0

@@ -31,3 +31,4 @@ class IGunner():
                 (body.center_x, body.center_y),
                 (self.view_x / norm, -self.view_y / norm),
                 self.projName)
+                #body.userData.getSpeed()) not a gud idea
