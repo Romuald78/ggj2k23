@@ -9,6 +9,7 @@ from classes.Camera import Camera
 from classes.Collisions import CollisionMgr
 from classes.Countdown import Countdown
 from classes.EnemyManager import EnemyManager
+from classes.HPBar import HPBar
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
 from classes.Root import Root
@@ -28,6 +29,7 @@ class Page1Home():
         self.playerProjectileManager = ProjectileManager(2000)
         self.enemyProjectileManager = ProjectileManager(1000)
         self.player = Player(self.playerProjectileManager, initPos=(500, 500))
+        self.HPBar = HPBar(self.camera,self.player)
         self.branchMgr = BranchManager()
         self.enemyManager = EnemyManager(self.camera,
                                          self.enemyProjectileManager,
@@ -55,6 +57,7 @@ class Page1Home():
 
         self.countdown.update(deltaTime)
         self.TST_branch.update(deltaTime)
+        self.HPBar.update(deltaTime)
 
     def draw(self):
         self.background.draw()
@@ -64,6 +67,7 @@ class Page1Home():
         self.playerProjectileManager.draw()
         self.player.draw()
         self.countdown.draw()
+        self.HPBar.draw()
 
     def onKeyEvent(self, key, isPressed):
         if key == arcade.key.Q:
