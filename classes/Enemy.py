@@ -42,9 +42,11 @@ class Enemy(IDamage,IGunner):
                 # enemy is dead but we have to keep it in memory for a while
                 # just for display
                 pass
+        if len(self.branches)==0:
+            self.sprite.scale -= 1 * deltaTime
 
     def canReap(self):
-        return self.mustBeDestroyed and len(self.branches)==0
+        return self.mustBeDestroyed and len(self.branches)==0 and self.sprite.scale <= 0
 
     def target(self, x, y):
         self.viewToGunner(self.sprite,x,y)

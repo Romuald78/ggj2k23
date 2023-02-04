@@ -21,7 +21,7 @@ class EnemyManager():
         self.defines = {
             MAIN_ENEMY:{
                 "filePath": "resources/images/enemy.png",
-                "scale": 0.4,
+                "scale": 0.3,
                 "filterColor": (255, 255, 255, 255),
                 "spriteBox": (3, 1, 981//3, 356),
                 "startIndex": 0,

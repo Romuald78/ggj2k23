@@ -11,10 +11,9 @@ class Player(IGunner,IDamage):
         self.maxHP = maxHP
         IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
         IDamage.__init__(self,maxHP,2)
-        playerSize = 163;
+        playerScale = 0.50
         params = {
             "filePath": "resources/images/player.png",
-            "size": (playerSize, playerSize),
             "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
@@ -27,7 +26,6 @@ class Player(IGunner,IDamage):
         self.bodyL = Gfx.create_animated(params)
         params = {
             "filePath": "resources/images/player.png",
-            "size": (playerSize, playerSize),
             "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
@@ -35,23 +33,36 @@ class Player(IGunner,IDamage):
             "frameDuration":0.15,
             "position": initPos
         }
-        self.bodyIdle = Gfx.create_animated(params)
+        self.bodyIdleR = Gfx.create_animated(params)
+        params["flipH"] = True
+        self.bodyIdleL = Gfx.create_animated(params)
+
         params = {
             "filePath": "resources/images/gun.png",
-            "size": (10, 10),
-            "filterColor": (255, 200, 128, 255),
+            "spriteBox":(1,4,460,400//5),
+            "startIndex":0,
+            "endIndex":4,
+            "frameDuration":0.15,
             "position": initPos
         }
-        self.gunR = Gfx.create_fixed(params)
+        self.gunR = Gfx.create_animated(params)
         params["flipH"] = True
-        self.gunL = Gfx.create_fixed(params)
+        self.gunL = Gfx.create_animated(params)
 
-        #colision
+        self.bodyR.scale = playerScale
+        self.bodyL.scale = playerScale
+        self.bodyIdleL.scale = playerScale
+        self.bodyIdleR.scale = playerScale
+        self.gunR.scale = playerScale
+        self.gunL.scale = playerScale
+
+        #collisions
         self.bodyL.userData = self
         self.bodyR.userData = self
         self.gunL.userData = self
         self.gunR.userData = self
-        self.bodyIdle.userData = self
+        self.bodyIdleL.userData = self
+        self.bodyIdleR.userData = self
 
         # Keyboard
         self.useKey = False
@@ -101,7 +112,10 @@ class Player(IGunner,IDamage):
     def update(self, deltaTime):
         self.bodyR.update_animation(deltaTime)
         self.bodyL.update_animation(deltaTime)
-        self.bodyIdle.update_animation(deltaTime)
+        self.gunR.update_animation(deltaTime)
+        self.gunL.update_animation(deltaTime)
+        self.bodyIdleL.update_animation(deltaTime)
+        self.bodyIdleR.update_animation(deltaTime)
         if self.useKey:
             # keyboard
             if self.moveL == self.moveR:
@@ -122,8 +136,10 @@ class Player(IGunner,IDamage):
         self.bodyL.center_y += self.speed_y * self.SPEED * deltaTime
         self.bodyR.center_x = self.bodyL.center_x
         self.bodyR.center_y = self.bodyL.center_y
-        self.bodyIdle.center_x = self.bodyL.center_x
-        self.bodyIdle.center_y = self.bodyL.center_y
+        self.bodyIdleL.center_x = self.bodyL.center_x
+        self.bodyIdleL.center_y = self.bodyL.center_y
+        self.bodyIdleR.center_x = self.bodyL.center_x
+        self.bodyIdleR.center_y = self.bodyL.center_y
         self.gunL.center_x = self.bodyL.center_x
         self.gunL.center_y = self.bodyL.center_y
         self.gunR.center_x = self.bodyL.center_x
@@ -158,6 +174,9 @@ class Player(IGunner,IDamage):
                 self.bodyL.draw()
                 self.gunL.draw()
         else:
-            self.bodyIdle.draw()
-            self.gunR.draw()
-
+            if self.view_x >= 0:
+                self.bodyIdleR.draw()
+                self.gunR.draw()
+            else:
+                self.bodyIdleL.draw()
+                self.gunL.draw()
