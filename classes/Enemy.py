@@ -5,7 +5,8 @@ from core.utils.utils import Gfx
 
 class Enemy():
 
-    def __init__(self, sprite):
+    def __init__(self, sprite, hp = 20):
+        self.hp = hp
         pass
 
     def update(self, deltaTime):

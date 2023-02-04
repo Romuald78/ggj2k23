@@ -44,7 +44,6 @@ class EnemyManager():
 
         if self.lastSpawn > self.SPAWN_TIME:
             self.lastSpawn -= self.SPAWN_TIME
-            print("new enemy")
             self.createEnemy((random.randint(0,self.W),random.randint(0,self.H)))
 
 
