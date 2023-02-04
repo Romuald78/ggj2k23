@@ -4,6 +4,7 @@ import random
 import arcade
 
 PLAYER_PROJ = "player_proj"
+ENEMY_PROJ = "enemy_proj"
 PROJ_SPEED = 2000
 
 # https://api.arcade.academy/en/latest/api/sprite_list.html
@@ -14,6 +15,9 @@ class ProjectileManager():
         self.defines = {
             PLAYER_PROJ: {
                 "path":"resources/images/player_projectile.png"
+            },
+            ENEMY_PROJ: {
+                "path":"resources/images/enemy_projectile.png"
             }
         }
 
