@@ -103,15 +103,18 @@ class MyGame(arcade.Window):
         # set application window background color
         arcade.set_background_color(arcade.color.BLACK)
         # Store gamepad list
-        self.gamepads = pyglet.input.get_controllers()
+        self.gamepads = arcade.get_joysticks()
         print(self.gamepads)
         # check every connected gamepad
         if self.gamepads:
             for g in self.gamepads:
                 # link all gamepad callbacks to the current class methods
                 g.open()
-                g.on_stick_motion = self.__onAxisMoveWin
-            # transform list into a dictionary to get its index faster
+                g.on_joybutton_press = self.__onButtonPressed
+                g.on_joybutton_release = self.__onButtonReleased
+                g.on_joyhat_motion = self.__onCrossMove
+                g.on_joyaxis_motion = self.__onAxisMove
+                # transform list into a dictionary to get its index faster
             self.gamepads = {self.gamepads[idx]: idx for idx in range(len(self.gamepads))}
         else:
             print("There are no Gamepad connected !")
