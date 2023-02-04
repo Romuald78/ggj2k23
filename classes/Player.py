@@ -1,33 +1,55 @@
 import math
 
+from classes.IDamage import IDamage
 from classes.IGunner import IGunner
 from classes.ProjectileManager import PLAYER_PROJ
 from core.utils.utils import Gfx
 
-class Player(IGunner):
-
-
+class Player(IGunner,IDamage):
 
     def __init__(self, projectileManager, initPos=(0, 0)):
-        super().__init__(PLAYER_PROJ, projectileManager, 0.1)
+        IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
+        IDamage.__init__(self,500,2)
         params = {
             "filePath": "resources/images/player.png",
-            "size": (200, 200),
-            "filterColor": (255, 255, 255, 255),
+            "size": (100, 100),
+            "filterColor": (255, 200, 128, 255),
+            "spriteBox":(4,1,139,163),
+            "startIndex":0,
+            "endIndex":3,
+            "frameDuration":0.15,
             "position": initPos
         }
-        self.bodyR = Gfx.create_fixed(params)
+        self.bodyR = Gfx.create_animated(params)
         params["flipH"] = True
-        self.bodyL = Gfx.create_fixed(params)
+        self.bodyL = Gfx.create_animated(params)
+        params = {
+            "filePath": "resources/images/player.png",
+            "size": (100, 100),
+            "filterColor": (255, 200, 128, 255),
+            "spriteBox":(4,1,139,163),
+            "startIndex":0,
+            "endIndex":0,
+            "frameDuration":0.15,
+            "position": initPos
+        }
+        self.bodyIdle = Gfx.create_animated(params)
         params = {
             "filePath": "resources/images/gun.png",
-            "size": (100, 100),
-            "filterColor": (255, 255, 255, 255),
+            "size": (10, 10),
+            "filterColor": (255, 200, 128, 255),
             "position": initPos
         }
         self.gunR = Gfx.create_fixed(params)
         params["flipH"] = True
         self.gunL = Gfx.create_fixed(params)
+
+        #colision
+        self.bodyL.userData = self
+        self.bodyR.userData = self
+        self.gunL.userData = self
+        self.gunR.userData = self
+        self.bodyIdle.userData = self
 
         # Keyboard
         self.useKey = False
@@ -75,6 +97,9 @@ class Player(IGunner):
         return not self.isAlive()
 
     def update(self, deltaTime):
+        self.bodyR.update_animation(deltaTime)
+        self.bodyL.update_animation(deltaTime)
+        self.bodyIdle.update_animation(deltaTime)
         if self.useKey:
             # keyboard
             if self.moveL == self.moveR:
@@ -95,6 +120,8 @@ class Player(IGunner):
         self.bodyL.center_y += self.speed_y * self.SPEED * deltaTime
         self.bodyR.center_x = self.bodyL.center_x
         self.bodyR.center_y = self.bodyL.center_y
+        self.bodyIdle.center_x = self.bodyL.center_x
+        self.bodyIdle.center_y = self.bodyL.center_y
         self.gunL.center_x = self.bodyL.center_x
         self.gunL.center_y = self.bodyL.center_y
         self.gunR.center_x = self.bodyL.center_x
@@ -114,10 +141,27 @@ class Player(IGunner):
     def center_y(self):
         return self.bodyL.center_y
 
+    def getBody(self):
+        return self.bodyL
+
+    def reduceHP(self, dmg):
+        IDamage.reduceHP(self,dmg)
+        if(self.hp < 0):
+            print("You Died")
+            self.hp += 100000000
+
+    def isMoving(self):
+        return self.speed_x != 0 or self.speed_y !=0 or self.moveL or self.moveR or self.moveD or self.moveU
+
     def draw(self):
-        if self.view_x >= 0:
-            self.bodyR.draw()
-            self.gunR.draw()
+        if(self.isMoving()):
+            if self.view_x >= 0:
+                self.bodyR.draw()
+                self.gunR.draw()
+            else:
+                self.bodyL.draw()
+                self.gunL.draw()
         else:
-            self.bodyL.draw()
-            self.gunL.draw()
+            self.bodyIdle.draw()
+            self.gunR.draw()
+

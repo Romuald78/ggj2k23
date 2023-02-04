@@ -8,7 +8,7 @@ class Enemy(IDamage,IGunner):
 
     def __init__(self, sprite, projectileManager, hp = 20, dmg = 1):
         IDamage.__init__(self,hp, dmg)
-        IGunner.__init__(self,ENEMY_PROJ, projectileManager,0.1)
+        IGunner.__init__(self,ENEMY_PROJ, projectileManager,0.3)
         self.projectileManager = projectileManager
         self.sprite = sprite
 
