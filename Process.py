@@ -40,70 +40,49 @@ class Process:
     ### UPDATE
     ### ====================================================================================================
     def update(self, deltaTime):
-        try:
-            self.frame_time += deltaTime
-            self.frame_count += 1
-            self.currentPage.update(deltaTime)
-        except:
-            pass
+        self.frame_time += deltaTime
+        self.frame_count += 1
+        self.currentPage.update(deltaTime)
 
     ### ====================================================================================================
     ### RENDERING
     ### ====================================================================================================
     def draw(self):
-        try:
-            self.currentPage.draw()
-            # if self.frame_count > 60:
-            #     print(int(60/self.frame_time))
-            #     self.frame_count = 0
-            #     self.frame_time = 0.0
-        except:
-            pass
+        self.currentPage.draw()
+        # if self.frame_count > 60:
+        #     print(int(60/self.frame_time))
+        #     self.frame_count = 0
+        #     self.frame_time = 0.0
 
     ### ====================================================================================================
     ### KEYBOARD EVENTS
     ### key is taken from : arcade.key.xxx
     ### ====================================================================================================
     def onKeyEvent(self, key, isPressed):
-        try:
-            self.currentPage.onKeyEvent(key, isPressed)
-        except:
-            pass
+        self.currentPage.onKeyEvent(key, isPressed)
 
     ### ====================================================================================================
     ### GAMEPAD BUTTON EVENTS
     ### buttonName can be "A", "B", "X", "Y", "LB", "RB", "VIEW", "MENU", "LSTICK", "RSTICK"
     ### ====================================================================================================
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
-        try:
-            self.currentPage.onButtonEvent(gamepadNum, buttonName, isPressed)
-        except:
-            pass
+        self.currentPage.onButtonEvent(gamepadNum, buttonName, isPressed)
 
     ### ====================================================================================================
     ### GAMEPAD AXIS EVENTS
     ### axisName can be "X", "Y", "RX", "RY", "Z"
     ### ====================================================================================================
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
-        try:
-            self.currentPage.onAxisEvent(gamepadNum, axisName, analogValue)
-        except:
-            pass
+        self.currentPage.onAxisEvent(gamepadNum, axisName, analogValue)
 
     ### ====================================================================================================
     ### MOUSE MOTION EVENTS
     ### ====================================================================================================
     def onMouseMotionEvent(self, x, y, dx, dy):
-        try:
-            self.currentPage.onMouseMotionEvent(x, y, dx, dy)
-        except:
-            pass
+        self.currentPage.onMouseMotionEvent(x, y, dx, dy)
 
     ### ====================================================================================================
     ### MOUSE BUTTON EVENTS
     ### ====================================================================================================
     def onMouseButtonEvent(self, x, y, buttonNum, isPressed):
-        try:
-            self.currentPage.onMouseButtonEvent(x, y, buttonNum, isPressed)
-        except:
-            pass
+        self.currentPage.onMouseButtonEvent(x, y, buttonNum, isPressed)

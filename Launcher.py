@@ -145,7 +145,10 @@ class MyGame(arcade.Window):
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def update(self, delta_time):
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
-        self.process.update(delta_time)
+        try:
+            self.process.update(delta_time)
+        except Exception as ex:
+            print(ex)
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -154,11 +157,14 @@ class MyGame(arcade.Window):
     def on_key_press(self, key, modifiers):
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
         # Close application if ESCAPE key is hit
-        if key == arcade.key.ESCAPE:
-            self.close()
-        if key == arcade.key.F11:
-            self.__toggleFullScreen()
-        self.process.onKeyEvent(key, True)
+        try:
+            if key == arcade.key.ESCAPE:
+                self.close()
+            if key == arcade.key.F11:
+                self.__toggleFullScreen()
+            self.process.onKeyEvent(key, True)
+        except Exception as ex:
+            print(ex)
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -166,7 +172,10 @@ class MyGame(arcade.Window):
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def on_key_release(self, key, modifiers):
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
-        self.process.onKeyEvent(key, False)
+        try:
+            self.process.onKeyEvent(key, False)
+        except Exception as ex:
+            print(ex)
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -174,7 +183,10 @@ class MyGame(arcade.Window):
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def onButtonPressed(self, gamepadNum, buttonNum):
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
-        self.process.onButtonEvent(gamepadNum, buttonNum, True)
+        try:
+            self.process.onButtonEvent(gamepadNum, buttonNum, True)
+        except Exception as ex:
+            print(ex)
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -182,48 +194,66 @@ class MyGame(arcade.Window):
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def onButtonReleased(self, gamepadNum, buttonNum):
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
-        self.process.onButtonEvent(gamepadNum, buttonNum, False)
+        try:
+            self.process.onButtonEvent(gamepadNum, buttonNum, False)
+        except Exception as ex:
+            print(ex)
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # GAMEPAD CROSSPAD events
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def onCrossMove(self, gamepadNum, xValue, yValue):
-        # - - - - - - - - - - - - - - - - - - - - - - - - -#
-        self.process.onAxisEvent(gamepadNum, "x", xValue)
-        self.process.onAxisEvent(gamepadNum, "y", yValue)
-        # - - - - - - - - - - - - - - - - - - - - - - - - -#
+        try:
+            # - - - - - - - - - - - - - - - - - - - - - - - - -#
+            self.process.onAxisEvent(gamepadNum, "x", xValue)
+            self.process.onAxisEvent(gamepadNum, "y", yValue)
+            # - - - - - - - - - - - - - - - - - - - - - - - - -#
+        except Exception as ex:
+            print(ex)
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # GAMEPAD AXIS events
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def onAxisMove(self, gamepadNum, axisName, analogValue):
-        # - - - - - - - - - - - - - - - - - - - - - - - - -#
-        if axisName == "z":
-            analogValue = -analogValue
-        self.process.onAxisEvent(gamepadNum, axisName.upper(), analogValue)
-        # - - - - - - - - - - - - - - - - - - - - - - - - -#
+        try:
+            # - - - - - - - - - - - - - - - - - - - - - - - - -#
+            if axisName == "z":
+                analogValue = -analogValue
+            self.process.onAxisEvent(gamepadNum, axisName.upper(), analogValue)
+            # - - - - - - - - - - - - - - - - - - - - - - - - -#
+        except Exception as ex:
+            print(ex)
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # MOUSE MOTION events
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def on_mouse_motion(self, x, y, dx, dy):
-        x, y = self.__convertXY(x, y)
-        self.process.onMouseMotionEvent(x, y, dx, dy)
+        try:
+            x, y = self.__convertXY(x, y)
+            self.process.onMouseMotionEvent(x, y, dx, dy)
+        except Exception as ex:
+            print(ex)
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # MOUSE BUTTON PRESSED events
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def on_mouse_press(self, x, y, button, modifiers):
-        x, y = self.__convertXY(x, y)
-        self.process.onMouseButtonEvent(x, y, button, True)
+        try:
+            x, y = self.__convertXY(x, y)
+            self.process.onMouseButtonEvent(x, y, button, True)
+        except Exception as ex:
+            print(ex)
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # MOUSE BUTTON RELEASED events
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def on_mouse_release(self, x, y, button, modifiers):
-        x, y = self.__convertXY(x, y)
-        self.process.onMouseButtonEvent(x, y, button, False)
+        try:
+            x, y = self.__convertXY(x, y)
+            self.process.onMouseButtonEvent(x, y, button, False)
+        except Exception as ex:
+            print(ex)
 
 
 ### ====================================================================================================
