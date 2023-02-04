@@ -10,9 +10,10 @@ class Player(IGunner,IDamage):
     def __init__(self, projectileManager, initPos=(0, 0)):
         IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
         IDamage.__init__(self,500,2)
+        playerSize = 70;
         params = {
             "filePath": "resources/images/player.png",
-            "size": (100, 100),
+            "size": (playerSize, playerSize),
             "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
@@ -25,7 +26,7 @@ class Player(IGunner,IDamage):
         self.bodyL = Gfx.create_animated(params)
         params = {
             "filePath": "resources/images/player.png",
-            "size": (100, 100),
+            "size": (playerSize, playerSize),
             "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
