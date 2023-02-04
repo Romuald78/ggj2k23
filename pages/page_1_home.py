@@ -27,10 +27,10 @@ class Page1Home():
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
         self.enemyManager = EnemyManager(self.camera, self.enemyProjectileManager,self.player)
 
+
         self.collMgr = CollisionMgr(self.playerProjectileManager.projs,
                                     self.enemyManager.enemies)
-        self.collMgrEnemy = CollisionMgr(self.enemyProjectileManager.projs,
-                                    [self.player])
+        self.collMgrEnemy = CollisionMgr([self.player.getBody()] , self.enemyProjectileManager.projs)
 
 
     def update(self, deltaTime):
@@ -39,6 +39,7 @@ class Page1Home():
         self.enemyProjectileManager.update(deltaTime)
         self.enemyManager.update(deltaTime)
         self.collMgr.update()
+        self.collMgrEnemy.update()
         self.camera.update( self.player.bodyL.center_x,
                             self.player.bodyL.center_y )
 

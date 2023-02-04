@@ -1,15 +1,15 @@
 import math
 
+from classes.IDamage import IDamage
 from classes.IGunner import IGunner
 from classes.ProjectileManager import PLAYER_PROJ
 from core.utils.utils import Gfx
 
-class Player(IGunner):
-
-
+class Player(IGunner,IDamage):
 
     def __init__(self, projectileManager, initPos=(0, 0)):
-        super().__init__(PLAYER_PROJ, projectileManager, 0.1)
+        IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.1)
+        IDamage.__init__(self,500,2)
         params = {
             "filePath": "resources/images/player.png",
             "size": (200, 200),
@@ -28,6 +28,12 @@ class Player(IGunner):
         self.gunR = Gfx.create_fixed(params)
         params["flipH"] = True
         self.gunL = Gfx.create_fixed(params)
+
+        #colision
+        self.bodyL.userData = self
+        self.bodyR.userData = self
+        self.gunL.userData = self
+        self.gunR.userData = self
 
         # Keyboard
         self.useKey = False
@@ -113,6 +119,15 @@ class Player(IGunner):
     @property
     def center_y(self):
         return self.bodyL.center_y
+
+    def getBody(self):
+        return self.bodyL
+
+    def reduceHP(self, dmg):
+        IDamage.reduceHP(self,dmg)
+        if(self.hp < 0):
+            print("You Died")
+            self.hp += 100000000
 
     def draw(self):
         if self.view_x >= 0:

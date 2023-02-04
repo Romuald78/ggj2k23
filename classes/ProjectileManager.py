@@ -3,6 +3,8 @@ import random
 
 import arcade
 
+from classes.Projectile import Projectile
+
 PLAYER_PROJ = "player_proj"
 ENEMY_PROJ = "enemy_proj"
 PROJ_SPEED = 2000
@@ -42,6 +44,7 @@ class ProjectileManager():
         sprite.hp = 1
         sprite.angle = 180 * math.atan2(dy,dx) / math.pi
         sprite.direction = (dx,dy)
+        sprite.userData = Projectile(1,1)
         self.projs.append(sprite)
 
     def update(self ,deltaTime):

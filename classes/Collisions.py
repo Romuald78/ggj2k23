@@ -9,6 +9,12 @@ class CollisionMgr():
 
     def update(self):
         for proj in self.proj:
+            B = proj.userData
             collidings = arcade.check_for_collision_with_list(proj, self.trgt)
             if(len(collidings)>0):
-                collidings[0].userData.reduceHP(1)
+                try:
+                    A = collidings[0].userData
+                    A.reduceHP(B.getDMG())
+                    B.reduceHP(A.getDMG())
+                except Exception as ex:
+                    print(ex)
