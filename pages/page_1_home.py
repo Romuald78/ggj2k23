@@ -1,7 +1,12 @@
+import random
+
 import arcade
 
+from classes.Collisions import CollisionMgr
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
+from core.utils import utils
+from core.utils.utils import Gfx
 
 
 class Page1Home():
@@ -31,13 +36,32 @@ class Page1Home():
         self.playerProjectileManager = ProjectileManager()
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
 
+        # TODO test collisions
+
+        self.trgtList = arcade.SpriteList(use_spatial_hash=True)
+        for i in range(20):
+            params = {
+                "filePath": "resources/images/flower.png",
+                "size": (100, 100),
+                "filterColor": (255, 255, 255, 255),
+                "position": (random.randint(0,self.W), random.randint(0,self.H))
+            }
+            spr = Gfx.create_fixed(params)
+            self.trgtList.append(spr)
+        self.collMgr = CollisionMgr(self.playerProjectileManager, self.trgtList)
+
+
     def update(self, deltaTime):
         self.player.update(deltaTime)
         self.playerProjectileManager.update(deltaTime)
 
+        self.collMgr.process()
+
     def draw(self):
         self.player.draw()
+        self.trgtList.draw()
         self.playerProjectileManager.draw()
+
 
     def onKeyEvent(self, key, isPressed):
         if key == arcade.key.Q :

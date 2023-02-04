@@ -26,6 +26,7 @@ class Player():
         self.gunL = Gfx.create_fixed(params)
 
         # Keyboard
+        self.useKey= False
         self.moveL = False
         self.moveR = False
         self.moveU = False
@@ -46,13 +47,19 @@ class Player():
         # shooting
         self.isShooting = False
 
+
+
     def moveLeft(self, isEnabled):
+        self.useKey = True
         self.moveL = isEnabled
     def moveRight(self, isEnabled):
+        self.useKey = True
         self.moveR = isEnabled
     def moveUp(self, isEnabled):
+        self.useKey = True
         self.moveU = isEnabled
     def moveDown(self, isEnabled):
+        self.useKey = True
         self.moveD = isEnabled
 
     def viewTo(self, x, y):
@@ -71,19 +78,20 @@ class Player():
         return not self.isAlive()
 
     def update(self, deltaTime):
-        # keyboard
-        if self.moveL == self.moveR:
-            self.speed_x = 0
-        elif self.moveL:
-            self.speed_x = -1
-        elif self.moveR:
-            self.speed_x = 1
-        if self.moveU == self.moveD:
-            self.speed_y = 0
-        elif self.moveU:
-            self.speed_y = 1
-        elif self.moveD:
-            self.speed_y = -1
+        if self.useKey:
+            # keyboard
+            if self.moveL == self.moveR:
+                self.speed_x = 0
+            elif self.moveL:
+                self.speed_x = -1
+            elif self.moveR:
+                self.speed_x = 1
+            if self.moveU == self.moveD:
+                self.speed_y = 0
+            elif self.moveU:
+                self.speed_y = 1
+            elif self.moveD:
+                self.speed_y = -1
 
         self.shootTimer += deltaTime
         self.bodyL.center_x += self.speed_x * self.SPEED * deltaTime
