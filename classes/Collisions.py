@@ -16,5 +16,6 @@ class CollisionMgr():
                     A = collidings[0].userData
                     A.reduceHP(B.getDMG())
                     B.reduceHP(A.getDMG())
+
                 except Exception as ex:
                     print(ex)

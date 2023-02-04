@@ -5,6 +5,7 @@ import arcade
 from arcade import Camera
 
 from classes import Player, ProjectileManager
+from classes.Branch import Branch
 from classes.Enemy import Enemy
 
 MAIN_ENEMY = "main_enemy"
@@ -13,7 +14,7 @@ MAIN_ENEMY = "main_enemy"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class EnemyManager():
 
-    def __init__(self, camera:Camera, projectileManager:ProjectileManager, player:Player):
+    def __init__(self, camera:Camera, projectileManager:ProjectileManager,branchMgr , player:Player):
         self.activated = True #for dev
         self.enemies = arcade.SpriteList()
         self.defines = {
@@ -26,6 +27,7 @@ class EnemyManager():
         self.camera = camera
         self.projectileManager = projectileManager
         self.player = player
+        self.branchMgr = branchMgr
 
     def createEnemy(self, initPos=(0, 0), enemy=MAIN_ENEMY):
         if( not self.activated):
@@ -37,6 +39,10 @@ class EnemyManager():
         sprite.center_y = initPos[1]
         sprite.userData = Enemy(sprite, self.projectileManager)
         self.enemies.append(sprite)
+        # create first branch of flower
+        brnch = Branch( initPos, 0, self.branchMgr, self.player )
+        sprite.userData.addBranch(brnch)
+
 
     def checkRemove(self, sprite):
         # Remove sprite if life time is over

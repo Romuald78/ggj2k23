@@ -8,12 +8,12 @@ from core.utils.utils import Gfx
 class Player(IGunner,IDamage):
 
     def __init__(self, projectileManager, initPos=(0, 0)):
-        IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.1)
+        IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
         IDamage.__init__(self,500,2)
         params = {
             "filePath": "resources/images/player.png",
             "size": (100, 100),
-            "filterColor": (255, 255, 255, 255),
+            "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
             "endIndex":3,
@@ -26,7 +26,7 @@ class Player(IGunner,IDamage):
         params = {
             "filePath": "resources/images/player.png",
             "size": (100, 100),
-            "filterColor": (255, 255, 255, 255),
+            "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
             "endIndex":0,
@@ -37,7 +37,7 @@ class Player(IGunner,IDamage):
         params = {
             "filePath": "resources/images/gun.png",
             "size": (10, 10),
-            "filterColor": (255, 255, 255, 255),
+            "filterColor": (255, 200, 128, 255),
             "position": initPos
         }
         self.gunR = Gfx.create_fixed(params)
