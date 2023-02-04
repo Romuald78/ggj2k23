@@ -28,7 +28,7 @@ class EnemyManager():
         sprite = arcade.Sprite(enemy_["path"],scale=0.1)
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
-        sprite.enemy = Enemy(sprite)
+        sprite.userData = Enemy(sprite, self.projectileManager)
         self.enemies.append(sprite)
 
     def __updateOneSprite(self, sprite, deltaTime):
@@ -51,7 +51,7 @@ class EnemyManager():
             ang     = random.randint(0, 360)
             x  = radius * math.cos(ang*math.pi/180)
             y  = radius * math.sin(ang*math.pi/180)
-            y  = y * 1.1 * self.camera.H / self.camera.W
+            y  = y * 1.0 * self.camera.H / self.camera.W
             x += self.camera.x
             y += self.camera.y
             self.createEnemy( (x,y) )

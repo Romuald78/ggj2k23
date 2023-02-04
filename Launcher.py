@@ -140,10 +140,10 @@ class MyGame(arcade.Window):
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     def update(self, delta_time):
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
-        try:
+#        try:
             self.process.update(delta_time)
-        except Exception as ex:
-            print(ex)
+#        except Exception as ex:
+#            print(ex)
         # - - - - - - - - - - - - - - - - - - - - - - - - -#
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
