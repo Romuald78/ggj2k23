@@ -11,7 +11,7 @@ MAIN_ENEMY = "main_enemy"
 class EnemyManager():
 
     def __init__(self):
-        self.enemy = arcade.SpriteList()
+        self.enemies = arcade.SpriteList()
         self.defines = {
             MAIN_ENEMY: {
                 "path":"resources/images/enemy.png"
@@ -28,19 +28,19 @@ class EnemyManager():
         sprite = arcade.Sprite(enemy_["path"],scale=0.1)
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
-        sprite.enemy = Enemy(sprite)
-        self.enemy.append(sprite)
+        sprite.userData = Enemy(sprite)
+        self.enemies.append(sprite)
 
     def __updateOneSprite(self, sprite, deltaTime):
         # Remove sprite if life time is over
-        if sprite.enemy.hp <= 0:
-            self.enemy.remove(sprite)
+        if sprite.userData.hp <= 0:
+            self.enemies.remove(sprite)
 
     def update(self,deltaTime):
         self.lastSpawn += deltaTime
-        for sprite in self.enemy:
+        for sprite in self.enemies:
             self.__updateOneSprite(sprite, deltaTime)
-        self.enemy.update()
+        self.enemies.update()
 
         if self.lastSpawn > self.SPAWN_TIME:
             self.lastSpawn -= self.SPAWN_TIME
@@ -48,7 +48,7 @@ class EnemyManager():
 
 
     def draw(self):
-        self.enemy.draw()
+        self.enemies.draw()
 
 
 

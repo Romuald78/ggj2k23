@@ -3,11 +3,12 @@ import arcade
 
 class CollisionMgr():
 
-    def __init__(self, projMgr, trgtList):
-        self.proj = projMgr.projs
+    def __init__(self, projList, trgtList):
+        self.proj = projList
         self.trgt = trgtList
 
-    def process(self):
+    def update(self):
         for proj in self.proj:
-            colliding = arcade.check_for_collision_with_list(proj, self.trgt)
-            
+            collidings = arcade.check_for_collision_with_list(proj, self.trgt)
+            if(len(collidings)>0):
+                collidings[0].userData.reduceHP(1)

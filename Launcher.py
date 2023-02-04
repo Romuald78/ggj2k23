@@ -41,8 +41,6 @@ class MyGame(arcade.Window):
     # ----------------------------------
     def __onButtonPressed(self, _gamepad, button):
         idx = self.gamepads[_gamepad]
-        print(button)
-        print(type(button))
         if(type(button) == "string"):
             self.onButtonPressed(idx, button)
         else:
@@ -60,12 +58,9 @@ class MyGame(arcade.Window):
         self.onCrossMove(idx, x, -y)
 
     def __onAxisMove(self, _gamepad, axis, value):
-        print(axis)
         idx = self.gamepads[_gamepad]
         self.onAxisMove(idx, axis, value)
 
-    def __onAxisMoveWin(self,controller, name, x_value, y_value):
-        print(controller)
     # ----------------------------------
     # PRIVATE METHODS FOR SCREEN COORDS
     # ----------------------------------
