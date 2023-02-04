@@ -12,7 +12,7 @@ class Root():
             "filePath": "resources/images/root.png",
              #"size": (250, 250),
             "filterColor": (255, 255, 255, 255),
-            "spriteBox":(1,3,890,640//3),
+            "spriteBox":(1,3,770,640//3),
             "startIndex":idx,
             "endIndex":idx,
             "frameDuration":1,
@@ -59,8 +59,8 @@ class Root():
 
     def addNextRoot(self, targetAngle):
         ang = self.sprite.angle
-        x = self.sprite.center_x + 0.5 * self.sprite.width * math.cos(ang*math.pi/180)
-        y = self.sprite.center_y + 0.5 * self.sprite.width * math.sin(ang * math.pi / 180)
+        x = self.sprite.center_x + 0.35 * self.sprite.width * math.cos(ang*math.pi/180)
+        y = self.sprite.center_y + 0.35 * self.sprite.width * math.sin(ang * math.pi / 180)
         newRoot = Root( (x,y), targetAngle) # TODO limit target angle
         self.nextRoot = newRoot
         return newRoot

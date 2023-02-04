@@ -7,14 +7,14 @@ from core.utils.utils import Gfx
 
 class Player(IGunner,IDamage):
 
-    def __init__(self, projectileManager, initPos=(0, 0),maxHP = 500):
+    def __init__(self, projectileManager, initPos=(0, 0),maxHP = 50):
         self.maxHP = maxHP
         IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
         IDamage.__init__(self,maxHP,2)
         playerScale = 0.50
         params = {
             "filePath": "resources/images/player.png",
-            "filterColor": (255, 200, 128, 255),
+            "filterColor": (255, 255, 255, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
             "endIndex":3,
@@ -26,7 +26,7 @@ class Player(IGunner,IDamage):
         self.bodyL = Gfx.create_animated(params)
         params = {
             "filePath": "resources/images/player.png",
-            "filterColor": (255, 200, 128, 255),
+            "filterColor": (255, 255, 255, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
             "endIndex":0,

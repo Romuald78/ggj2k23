@@ -17,13 +17,13 @@ class ProjectileManager():
         self.defines = {
             PLAYER_PROJ: {
                 "path":"resources/images/player_projectile.png",
-                "color":(255,255,128,255),
+                "color":(255,255,255,255),
                 "scale":0.5
             },
             ENEMY_PROJ: {
                 "path":"resources/images/enemy_projectile.png",
-                "color":(128,128,255,255),
-                "scale":0.5
+                "color":(255,255,255,255),
+                "scale":0.3
             }
         }
         self.proj_speed = proj_speed
