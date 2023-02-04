@@ -48,12 +48,13 @@ class EnemyManager():
             delta   = min(self.camera.W, self.camera.H)/2
             radius += random.randint(0, delta)
             ang     = random.randint(0, 360)
-            x = radius * math.cos(ang*math.pi/180) + self.camera.x
-            y = radius * math.sin(ang*math.pi/180) + self.camera.y
-
+            x  = radius * math.cos(ang*math.pi/180)
+            y  = radius * math.sin(ang*math.pi/180)
+            y  = y * 1.1 * self.camera.H / self.camera.W
+            x += self.camera.x
+            y += self.camera.y
             self.createEnemy( (x,y) )
 
-        # TODO
 
     def draw(self):
         self.enemies.draw()
