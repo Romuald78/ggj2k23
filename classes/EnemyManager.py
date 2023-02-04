@@ -20,7 +20,7 @@ class EnemyManager():
                 "path": "resources/images/enemy.png"
             }
         }
-        self.SPAWN_TIME = 0.25  # secondes betwwen enemy spawn
+        self.SPAWN_TIME = 0.25 * 10 # TODO # secondes betwwen enemy spawn
         self.lastSpawn = 0
         self.camera = camera
         self.projectileManager = projectileManager
@@ -42,7 +42,9 @@ class EnemyManager():
 
     def checkRemove(self, sprite):
         # Remove sprite if life time is over
-        if sprite.userData.hp <= 0:
+        # Before removing enemy, check all its branches
+        #print(sprite.userData, sprite.userData.canReap(), sprite.userData.mustBeDestroyed)
+        if sprite.userData.hp <= 0 and sprite.userData.canReap():
             self.enemies.remove(sprite)
 
     def enemyAim(self, enemy: Enemy, x, y):
@@ -55,8 +57,8 @@ class EnemyManager():
         for sprite in self.enemies:
             enemy: Enemy = sprite.userData
             enemy.update(deltaTime)
-            self.checkRemove(sprite)
             self.enemyAim(sprite.userData, self.player.center_x, self.player.center_y)
+            self.checkRemove(sprite)
 
         if self.lastSpawn > self.SPAWN_TIME:
             self.lastSpawn -= self.SPAWN_TIME

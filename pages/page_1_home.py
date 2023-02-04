@@ -14,6 +14,8 @@ from classes.Root import Root
 from core.utils import utils
 from core.utils.utils import Gfx
 
+DEBUG_REMOVE_ENEMY_PROJECTILES = False
+
 
 class Page1Home():
 
@@ -42,32 +44,18 @@ class Page1Home():
         self.background = Background()
 
 
-
-
-
-        self.TST_branch = Branch( (250, 500), 0, self.branchMgr, self.player )
-
-
-
-
     def update(self, deltaTime):
         self.background.update(deltaTime)
         self.player.update(deltaTime)
         self.playerProjectileManager.update(deltaTime)
-        self.enemyProjectileManager.update(deltaTime)
+        if not DEBUG_REMOVE_ENEMY_PROJECTILES:
+            self.enemyProjectileManager.update(deltaTime)
         self.enemyManager.update(deltaTime)
         self.collMgr.update()
         self.branchMgr.update(deltaTime)
         self.collMgrEnemy.update()
         self.camera.update( self.player.bodyL.center_x,
                             self.player.bodyL.center_y )
-
-
-
-
-        self.TST_branch.update(deltaTime)
-
-
 
 
     def draw(self):

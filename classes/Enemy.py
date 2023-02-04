@@ -15,15 +15,35 @@ class Enemy(IDamage,IGunner):
         self.projectileManager = projectileManager
         self.sprite = sprite
         self.branches = []
+        self.mustBeDestroyed = False
 
     def addBranch(self, brnch):
         self.branches.append(brnch)
 
-    def update(self, deltaTime):
-        self.updateGunner(deltaTime,self.sprite)
-        # update branches
+    def destroy(self):
+        self.mustBeDestroyed = True
         for b in self.branches:
+            b.destroy()
+
+    def update(self, deltaTime):
+        if self.hp <= 0:
+            self.destroy()
+        # update branches if needed
+        for b in self.branches:
+            # growing the branch
             b.update(deltaTime)
+            if not self.mustBeDestroyed:
+                # launch projectile
+                self.updateGunner(deltaTime, self.sprite)
+            elif b.canReap():
+                self.branches.remove(b)
+            else:
+                # enemy is dead but we have to keep it in memory for a while
+                # just for display
+                pass
+
+    def canReap(self):
+        return self.mustBeDestroyed and len(self.branches)==0
 
     def target(self,x,y):
         self.viewToGunner(self.sprite,x,y)
