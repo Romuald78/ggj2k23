@@ -24,7 +24,7 @@ class Page1Home():
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
         self.playerProjectileManager = ProjectileManager()
         self.enemyProjectileManager = ProjectileManager()
-        self.enemyManager = EnemyManager(self.camera)
+        self.enemyManager = EnemyManager(self.camera, self.enemyProjectileManager)
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
 
         # TODO test collisions

@@ -10,16 +10,22 @@ MAIN_ENEMY = "main_enemy"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class EnemyManager():
 
-    def __init__(self, camera, projectileManager):
+<<<<<<< HEAD
+    def __init__(self,projectileManager):
+        self.enemy = arcade.SpriteList()
+=======
+    def __init__(self):
         self.enemies = arcade.SpriteList()
+>>>>>>> 313420ea5e9d5bf5c12afd95795e848006a4368b
         self.defines = {
             MAIN_ENEMY: {
                 "path":"resources/images/enemy.png"
             }
         }
-        self.SPAWN_TIME = 0.25 # secondes betwwen enemy spawn
+        self.SPAWN_TIME = 1 # secondes betwwen enemy spawn
         self.lastSpawn = 0
-        self.camera = camera
+        self.W = 1000 #change
+        self.H = 1000 #change
         self.projectileManager = projectileManager
 
     def createEnemy(self, initPos=(0,0), enemy=MAIN_ENEMY):
@@ -28,8 +34,13 @@ class EnemyManager():
         sprite = arcade.Sprite(enemy_["path"],scale=0.1)
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
-        sprite.enemy = Enemy(sprite)
+<<<<<<< HEAD
+        sprite.enemy = Enemy(sprite,self.projectileManager)
+        self.enemy.append(sprite)
+=======
+        sprite.userData = Enemy(sprite)
         self.enemies.append(sprite)
+>>>>>>> 313420ea5e9d5bf5c12afd95795e848006a4368b
 
     def __updateOneSprite(self, sprite, deltaTime):
         # Remove sprite if life time is over
@@ -44,17 +55,7 @@ class EnemyManager():
 
         if self.lastSpawn > self.SPAWN_TIME:
             self.lastSpawn -= self.SPAWN_TIME
-
-            radius  = max(self.camera.W, self.camera.H)/2
-            delta   = min(self.camera.W, self.camera.H)/2
-            radius += random.randint(0, delta)
-            ang     = random.randint(0, 360)
-            x  = radius * math.cos(ang*math.pi/180)
-            y  = radius * math.sin(ang*math.pi/180)
-            y  = y * 1.1 * self.camera.H / self.camera.W
-            x += self.camera.x
-            y += self.camera.y
-            self.createEnemy( (x,y) )
+            self.createEnemy((random.randint(0,self.W),random.randint(0,self.H)))
 
 
     def draw(self):
