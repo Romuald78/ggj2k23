@@ -36,12 +36,13 @@ class Page1Home():
     def setup(self):
         self.playerProjectileManager = ProjectileManager()
         self.enemyProjectileManager = ProjectileManager()
-        self.enemyManager = EnemyManager(self.enemyProjectileManager)
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
+        self.enemyManager = EnemyManager(self.enemyProjectileManager,self.player)
 
-        # TODO test collisions
         self.collMgr = CollisionMgr(self.playerProjectileManager.projs,
                                     self.enemyManager.enemies)
+        self.collMgrEnemy = CollisionMgr(self.enemyProjectileManager.projs,
+                                    [self.player])
 
 
     def update(self, deltaTime):

@@ -5,9 +5,9 @@ from arcade import Sprite
 
 class IGunner():
 
-    def __init__(self, projName, projectileManager, fireRate=1):
+    def __init__(self, projName, projectileManager, fireRateSecond=0.1):
         self.shootTimer = 0
-        self.fireRate = fireRate
+        self.fireRate = fireRateSecond
         self.projName = projName
         self.projectileManager = projectileManager
         self.view_x = 1

@@ -6,6 +6,8 @@ from core.utils.utils import Gfx
 
 class Player(IGunner):
 
+    
+
     def __init__(self, projectileManager, initPos=(0, 0)):
         super().__init__(PLAYER_PROJ, projectileManager, 0.1)
         params = {
@@ -103,6 +105,14 @@ class Player(IGunner):
         self.gunR.angle = ang
 
         self.updateGunner(deltaTime,self.bodyL)
+
+    @property
+    def center_x(self):
+        return self.bodyL.center_x
+
+    @property
+    def center_y(self):
+        return self.bodyL.center_y
 
     def draw(self):
         if self.view_x >= 0:
