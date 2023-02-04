@@ -10,7 +10,7 @@ MAIN_ENEMY = "main_enemy"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class EnemyManager():
 
-    def __init__(self):
+    def __init__(self,projectileManager):
         self.enemy = arcade.SpriteList()
         self.defines = {
             MAIN_ENEMY: {
@@ -21,6 +21,7 @@ class EnemyManager():
         self.lastSpawn = 0
         self.W = 1000 #change
         self.H = 1000 #change
+        self.projectileManager = projectileManager
 
     def createEnemy(self, initPos=(0,0), enemy=MAIN_ENEMY):
         # add randomness for projectile (10%)
@@ -28,7 +29,7 @@ class EnemyManager():
         sprite = arcade.Sprite(enemy_["path"],scale=0.1)
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
-        sprite.enemy = Enemy(sprite)
+        sprite.enemy = Enemy(sprite,self.projectileManager)
         self.enemy.append(sprite)
 
     def __updateOneSprite(self, sprite, deltaTime):

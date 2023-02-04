@@ -36,7 +36,7 @@ class Page1Home():
     def setup(self):
         self.playerProjectileManager = ProjectileManager()
         self.enemyProjectileManager = ProjectileManager()
-        self.enemyManager = EnemyManager()
+        self.enemyManager = EnemyManager(self.enemyProjectileManager)
         self.player = Player( self.playerProjectileManager, initPos=(500,500) )
         self.enemyManager.createEnemy((100,100))
 

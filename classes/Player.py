@@ -1,44 +1,44 @@
 import math
 
+from classes.IGunner import IGunner
 from classes.ProjectileManager import PLAYER_PROJ
 from core.utils.utils import Gfx
 
-class Player():
+class Player(IGunner):
 
-    def __init__(self,projectileManager, initPos=(0,0)):
+    def __init__(self, projectileManager, initPos=(0, 0)):
+        super().__init__(PLAYER_PROJ, projectileManager, 0.1)
         params = {
-            "filePath" : "resources/images/player.png",
-            "size" : (200,200),
-            "filterColor" : (255, 255, 255, 255),
-            "position" : initPos
+            "filePath": "resources/images/player.png",
+            "size": (200, 200),
+            "filterColor": (255, 255, 255, 255),
+            "position": initPos
         }
         self.bodyR = Gfx.create_fixed(params)
         params["flipH"] = True
         self.bodyL = Gfx.create_fixed(params)
         params = {
-            "filePath" : "resources/images/gun.png",
-            "size" : (100,100),
-            "filterColor" : (255, 255, 255, 255),
-            "position" : initPos
+            "filePath": "resources/images/gun.png",
+            "size": (100, 100),
+            "filterColor": (255, 255, 255, 255),
+            "position": initPos
         }
         self.gunR = Gfx.create_fixed(params)
         params["flipH"] = True
         self.gunL = Gfx.create_fixed(params)
 
         # Keyboard
-        self.useKey= False
+        self.useKey = False
         self.moveL = False
         self.moveR = False
         self.moveU = False
         self.moveD = False
         # move and view
-        self.view_x = 1
-        self.view_y = 0
         self.speed_x = 0
         self.speed_y = 0
         self.SPEED = 750
         self.projectileManager = projectileManager
-        self.FIRE_RATE = 0.1 #s between proj
+        self.FIRE_RATE = 0.1  # s between proj
         self.shootTimer = 0
 
         # life point
@@ -47,29 +47,24 @@ class Player():
         # shooting
         self.isShooting = False
 
-
-
     def moveLeft(self, isEnabled):
         self.useKey = True
         self.moveL = isEnabled
+
     def moveRight(self, isEnabled):
         self.useKey = True
         self.moveR = isEnabled
+
     def moveUp(self, isEnabled):
         self.useKey = True
         self.moveU = isEnabled
+
     def moveDown(self, isEnabled):
         self.useKey = True
         self.moveD = isEnabled
 
     def viewTo(self, x, y):
-        dx = x - self.bodyL.center_x
-        dy = -y + self.bodyL.center_y
-        norm = math.sqrt(self.view_x * self.view_x + self.view_y * self.view_y)
-        dx /= norm
-        dy /= norm
-        self.view_x = dx
-        self.view_y = dy
+        self.viewToGunner(self.bodyL, x, y)
 
     def isAlive(self):
         return self.life > 0
@@ -104,16 +99,10 @@ class Player():
         self.gunR.center_y = self.bodyL.center_y
 
         ang = 180 * math.atan2(-self.view_y, self.view_x) / math.pi
-        self.gunL.angle = ang+180
+        self.gunL.angle = ang + 180
         self.gunR.angle = ang
 
-        if self.shootTimer > self.FIRE_RATE:
-            norm = math.sqrt(self.view_x*self.view_x + self.view_y*self.view_y)
-            self.shootTimer -= self.FIRE_RATE
-            self.projectileManager.createProjectile(
-                (self.bodyR.center_x,self.bodyR.center_y),
-                (self.view_x/norm, -self.view_y/norm),
-                PLAYER_PROJ)
+        self.updateGunner(deltaTime,self.bodyL)
 
     def draw(self):
         if self.view_x >= 0:
@@ -122,5 +111,3 @@ class Player():
         else:
             self.bodyL.draw()
             self.gunL.draw()
-
-
