@@ -11,7 +11,7 @@ class Enemy(IDamage,IGunner):
 
     def __init__(self, sprite, projectileManager, hp = 1, dmg = 1):
         IDamage.__init__(self,hp, dmg)
-        IGunner.__init__(self,ENEMY_PROJ, projectileManager,0.75)
+        IGunner.__init__(self,ENEMY_PROJ, projectileManager,1.25)
         self.projectileManager = projectileManager
         self.sprite = sprite
         self.branches = []
@@ -45,7 +45,7 @@ class Enemy(IDamage,IGunner):
     def canReap(self):
         return self.mustBeDestroyed and len(self.branches)==0
 
-    def target(self,x,y):
+    def target(self, x, y):
         self.viewToGunner(self.sprite,x,y)
 
 

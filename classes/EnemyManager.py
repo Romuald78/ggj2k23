@@ -3,9 +3,11 @@ import random
 
 import arcade
 
-from classes import Player
+from classes import Player, ProjectileManager
 from classes.Branch import Branch
+from classes.Camera import Camera
 from classes.Enemy import Enemy
+from core.utils.utils import Gfx
 
 MAIN_ENEMY = "main_enemy"
 
@@ -13,11 +15,18 @@ MAIN_ENEMY = "main_enemy"
 # https://api.arcade.academy/en/latest/api/sprite_list.html
 class EnemyManager():
 
-    def __init__(self, camera, projectileManager, branchMgr, player):
+    def __init__(self, camera:Camera, projectileManager:ProjectileManager,branchMgr , player:Player):
+        self.activated = True #for dev
         self.enemies = arcade.SpriteList()
         self.defines = {
-            MAIN_ENEMY: {
-                "path": "resources/images/enemy.png"
+            MAIN_ENEMY:{
+                "filePath": "resources/images/enemy.png",
+                "scale": 0.4,
+                "filterColor": (255, 255, 255, 255),
+                "spriteBox": (3, 1, 981//3, 356),
+                "startIndex": 0,
+                "endIndex": 2,
+                "frameDuration": 0.30,
             }
         }
         self.SPAWN_TIME = 0.25 * 10 # TODO # secondes betwwen enemy spawn
@@ -28,9 +37,13 @@ class EnemyManager():
         self.branchMgr = branchMgr
 
     def createEnemy(self, initPos=(0, 0), enemy=MAIN_ENEMY):
+        if( not self.activated):
+            return
         # add randomness for projectile (10%)
-        enemy_ = self.defines[enemy]
-        sprite = arcade.Sprite(enemy_["path"], scale=0.1)
+        enemyTemplate = self.defines[enemy]
+        sprite = Gfx.create_animated(enemyTemplate)
+        sprite.scale = enemyTemplate["scale"]
+
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
         sprite.userData = Enemy(sprite, self.projectileManager)
@@ -55,6 +68,7 @@ class EnemyManager():
         self.enemies.update()
 
         for sprite in self.enemies:
+            sprite.update_animation(deltaTime)
             enemy: Enemy = sprite.userData
             enemy.update(deltaTime)
             self.enemyAim(sprite.userData, self.player.center_x, self.player.center_y)
