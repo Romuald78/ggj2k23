@@ -13,6 +13,7 @@ PROJ_SPEED = 2000
 class ProjectileManager():
 
     def __init__(self):
+        self.activated = False #for dev
         self.projs = arcade.SpriteList()
         self.defines = {
             PLAYER_PROJ: {
@@ -33,6 +34,8 @@ class ProjectileManager():
             self.projs.remove(sprite)
 
     def createProjectile(self, initPos=(0,0), direction=(1,0), projectile=PLAYER_PROJ):
+        if(not self.activated):
+            return
         # add randomness for projectile (10%)
         dx = direction[0] + random.randint(-100,100)/1000
         dy = direction[1] + random.randint(-100,100)/1000

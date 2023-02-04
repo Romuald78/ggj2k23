@@ -2,6 +2,7 @@ import random
 
 import arcade
 
+from classes.BackGround import Background
 from classes.Camera import Camera
 from classes.Collisions import CollisionMgr
 from classes.EnemyManager import EnemyManager
@@ -31,9 +32,11 @@ class Page1Home():
         self.collMgr = CollisionMgr(self.playerProjectileManager.projs,
                                     self.enemyManager.enemies)
         self.collMgrEnemy = CollisionMgr([self.player.getBody()] , self.enemyProjectileManager.projs)
+        self.background = Background()
 
 
     def update(self, deltaTime):
+        self.background.update(deltaTime)
         self.player.update(deltaTime)
         self.playerProjectileManager.update(deltaTime)
         self.enemyProjectileManager.update(deltaTime)
@@ -44,6 +47,7 @@ class Page1Home():
                             self.player.bodyL.center_y )
 
     def draw(self):
+        self.background.draw()
         self.player.draw()
         self.playerProjectileManager.draw()
         self.enemyProjectileManager.draw()
