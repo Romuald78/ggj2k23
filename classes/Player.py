@@ -11,10 +11,9 @@ class Player(IGunner,IDamage):
         self.maxHP = maxHP
         IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
         IDamage.__init__(self,maxHP,2)
-        playerSize = 70;
+        playerScale = 0.50;
         params = {
             "filePath": "resources/images/player.png",
-            "size": (playerSize, playerSize),
             "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
@@ -27,7 +26,6 @@ class Player(IGunner,IDamage):
         self.bodyL = Gfx.create_animated(params)
         params = {
             "filePath": "resources/images/player.png",
-            "size": (playerSize, playerSize),
             "filterColor": (255, 200, 128, 255),
             "spriteBox":(4,1,139,163),
             "startIndex":0,
@@ -38,13 +36,21 @@ class Player(IGunner,IDamage):
         self.bodyIdle = Gfx.create_animated(params)
         params = {
             "filePath": "resources/images/gun.png",
-            "size": (10, 10),
-            "filterColor": (255, 200, 128, 255),
+            "spriteBox":(1,4,460,400//5),
+            "startIndex":0,
+            "endIndex":4,
+            "frameDuration":0.15,
             "position": initPos
         }
-        self.gunR = Gfx.create_fixed(params)
+        self.gunR = Gfx.create_animated(params)
         params["flipH"] = True
-        self.gunL = Gfx.create_fixed(params)
+        self.gunL = Gfx.create_animated(params)
+
+        self.bodyR.scale = playerScale
+        self.bodyL.scale = playerScale
+        self.bodyIdle.scale = playerScale
+        self.gunR.scale = playerScale
+        self.gunL.scale = playerScale
 
         #colision
         self.bodyL.userData = self
@@ -101,6 +107,8 @@ class Player(IGunner,IDamage):
     def update(self, deltaTime):
         self.bodyR.update_animation(deltaTime)
         self.bodyL.update_animation(deltaTime)
+        self.gunR.update_animation(deltaTime)
+        self.gunL.update_animation(deltaTime)
         self.bodyIdle.update_animation(deltaTime)
         if self.useKey:
             # keyboard
