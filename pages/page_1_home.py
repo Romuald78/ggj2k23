@@ -12,6 +12,7 @@ from classes.EnemyManager import EnemyManager
 from classes.HPBar import HPBar
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
+from core.utils.utils import Gfx
 
 DEBUG_REMOVE_ENEMY_PROJECTILES = False
 
@@ -30,6 +31,11 @@ class Page1Home():
 
     def setup(self, config=None):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
+        params = {
+                "filePath": "resources/images/win.png",
+                "position" : (self.camera.x,self.camera.y + 2*self.H)
+            }
+        self.win = Gfx.create_fixed(params)
         self.countdown = Countdown(self.camera,self.process,6)
         self.playerProjectileManager = ProjectileManager((2000,2000))
         self.enemyProjectileManager = ProjectileManager((1000,1000))
@@ -51,6 +57,8 @@ class Page1Home():
         self.music = arcade.load_sound("resources/sound/VampireSurvivorGGJ-V2.mp3")
         self.started = False
         self.endGame = None
+
+
 
     def update(self, deltaTime):
         if not self.started:
@@ -81,6 +89,12 @@ class Page1Home():
                                 self.player.bodyL.center_y )
 
         if self.endGame is not None:
+            # move win or lose
+            spr = self.win
+            if self.endGame == "lose":
+                pass # TODO
+            spr.center_x = self.camera.x
+            spr.center_y = spr.center_y * 0.95 + 0.05*self.H/2
             self.endTime -= deltaTime
             if self.endTime < 0:
                 self.endTime = 0
@@ -94,16 +108,18 @@ class Page1Home():
         self.player.draw()
         self.countdown.draw()
         self.HPBar.draw()
+        self.win.draw()
 
     def onKeyEvent(self, key, isPressed):
-        if key == arcade.key.Q:
-            self.player.moveLeft(isPressed)
-        if key == arcade.key.D:
-            self.player.moveRight(isPressed)
-        if key == arcade.key.Z:
-            self.player.moveUp(isPressed)
-        if key == arcade.key.S:
-            self.player.moveDown(isPressed)
+        if self.endGame is None:
+            if key == arcade.key.Q:
+                self.player.moveLeft(isPressed)
+            if key == arcade.key.D:
+                self.player.moveRight(isPressed)
+            if key == arcade.key.Z:
+                self.player.moveUp(isPressed)
+            if key == arcade.key.S:
+                self.player.moveDown(isPressed)
 
         if self.endTime <= 0 and not isPressed:
             self.process.selectPage(1)
