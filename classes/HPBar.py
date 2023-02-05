@@ -25,7 +25,6 @@ class HPBar:
         percent = (self.player.hp / self.player.maxHP)
 
         arcade.draw_rectangle_filled(self.sprite.center_x+10, self.sprite.center_y - 15, 150, 40,(96,96,96,256),tilt_angle=80)
-
         ymid = self.sprite.center_y - (1-percent) * 142 / 2
         arcade.draw_rectangle_filled(self.sprite.center_x+12, ymid-13, 40, 142*percent,arcade.color.BLUE_GRAY,tilt_angle=-10)
 

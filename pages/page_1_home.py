@@ -27,7 +27,7 @@ class Page1Home():
 
     def setup(self):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
-        self.countdown = Countdown(self.camera, (0, (self.H // 2) - 50))
+        self.countdown = Countdown(self.camera)
         self.playerProjectileManager = ProjectileManager((2000,2000))
         self.enemyProjectileManager = ProjectileManager((1000,1000))
         self.player = Player(self.playerProjectileManager, initPos=(500, 500))
