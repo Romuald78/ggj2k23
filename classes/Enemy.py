@@ -26,6 +26,9 @@ class Enemy(IDamage,IGunner):
         for b in self.branches:
             b.destroy()
 
+    def getSpeed(self):
+        return (0,0)
+
     def update(self, deltaTime):
         if self.hp <= 0:
             self.destroy()

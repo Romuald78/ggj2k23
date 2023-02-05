@@ -28,8 +28,8 @@ class Page1Home():
     def setup(self):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
         self.countdown = Countdown(self.camera, (0, (self.H // 2) - 50))
-        self.playerProjectileManager = ProjectileManager(2000)
-        self.enemyProjectileManager = ProjectileManager(1000)
+        self.playerProjectileManager = ProjectileManager((2000,2000))
+        self.enemyProjectileManager = ProjectileManager((1000,1000))
         self.player = Player(self.playerProjectileManager, initPos=(500, 500))
         self.HPBar = HPBar(self.camera,self.player)
         self.branchMgr = BranchManager()
@@ -84,6 +84,9 @@ class Page1Home():
         self.player.viewTo(x, y)
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
+        if not hasattr(self,"player") :
+            return
+
         if axisName == "X":
             if abs(analogValue) <= 0.15:
                 analogValue = 0

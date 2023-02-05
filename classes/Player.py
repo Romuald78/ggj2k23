@@ -151,6 +151,9 @@ class Player(IGunner,IDamage):
 
         self.updateGunner(deltaTime,self.bodyL)
 
+    def getSpeed(self):
+        return (self.speed_x * self.SPEED,self.speed_y * self.SPEED)
+
     @property
     def center_x(self):
         return self.bodyL.center_x
