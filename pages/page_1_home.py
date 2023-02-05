@@ -132,8 +132,8 @@ class Page1Home():
             if key == arcade.key.S:
                 self.player.moveDown(isPressed)
 
-        if self.endTime <= 0 and not isPressed:
-            self.process.selectPage(1)
+            if self.endTime <= 0 and not isPressed:
+                self.process.selectPage(1)
 
 
     def onMouseMotionEvent(self, x, y, dx, dy):
