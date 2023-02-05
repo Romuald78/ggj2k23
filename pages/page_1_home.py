@@ -1,8 +1,6 @@
-import random
 
 import arcade
 
-from classes.Branch import Branch
 from classes.BranchManager import BranchManager
 from classes.BackGround import Background
 from classes.Camera import Camera
@@ -25,6 +23,7 @@ class Page1Home():
         self.W = w
         self.H = h
         self.process = process
+        self.GLOBAL_LEVEL = 1
 
     def refresh(self):
         self.setup()
@@ -45,7 +44,7 @@ class Page1Home():
         self.playerProjectileManager = ProjectileManager()
         self.enemyProjectileManager = ProjectileManager()
         self.player = Player(self.playerProjectileManager, self.camera, initPos=(500, 500))
-        self.countdown = Countdown(self.camera,self.process,60)
+        self.countdown = Countdown(self.camera,self.process,50+(self.GLOBAL_LEVEL*10))
         self.HPBar = HPBar(self.camera,self.player,self.process)
         self.branchMgr = BranchManager()
         self.endTime = 2
@@ -67,7 +66,7 @@ class Page1Home():
         #15 trop dur
         #10 level high
         #5 normal
-        for i in range(0,10):
+        for i in range(0,int(self.GLOBAL_LEVEL*3.5)):
             self.enemyManager.randomSpawn()
 
 
@@ -85,7 +84,9 @@ class Page1Home():
                 print("YOU LOSE")
             if self.countdown.timeSecondes <= 0.0 and self.endGame is None:
                 self.endGame = "win"
-                print("YOU WIN")
+                self.GLOBAL_LEVEL+=1
+                print("level :"+str(self.GLOBAL_LEVEL))
+                print("YOU WIN LVL+1")
 
             self.player.update(deltaTime)
             self.playerProjectileManager.update(deltaTime)
