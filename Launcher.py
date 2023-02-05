@@ -1,18 +1,24 @@
 ### ====================================================================================================
 ### IMPORTS
 ### ====================================================================================================
+import sys
+
 import arcade
 import pyglet
-pyglet.options["xinput_controllers"] = False
 
-from Process import Process
+from core.Process import Process
 import os
+
+pyglet.options["xinput_controllers"] = False
 
 ### ====================================================================================================
 ### CONSTANTS
 ### ====================================================================================================
 TITLE = "Python RGR coding challenge !"
 
+#https://api.arcade.academy/en/latest/tutorials/bundling_with_pyinstaller/index.html
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    os.chdir(sys._MEIPASS)
 
 ### ====================================================================================================
 ### GAME CLASS
