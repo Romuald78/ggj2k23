@@ -85,6 +85,8 @@ class Background:
                 del self.tilesMap[key]
 
     def draw(self):
-        self.tiles.draw()
-        self.deco.draw()
-        pass
+        try:
+            self.tiles.draw()
+            self.deco.draw()
+        except:
+            pass #yolo

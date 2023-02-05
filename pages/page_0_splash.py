@@ -14,6 +14,9 @@ class Page0Splash():
         self.H = h
         self.process = process
 
+    def refresh(self):
+        pass
+
     def setup(self):
         self.steps = 0
         params = {
@@ -157,7 +160,7 @@ class Page0Splash():
             self.startGame(gamepadNum)
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
-        self.startGame(gamepadNum)
+        pass
 
     def onMouseMotionEvent(self, x, y, dx, dy):
         pass

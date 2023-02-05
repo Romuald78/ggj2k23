@@ -14,6 +14,9 @@ class Page2GameOver():
         self.H = h
         self.process = process
 
+    def refresh(self):
+        pass
+
     def setup(self):
         self.steps = 0
         params = {
@@ -51,6 +54,7 @@ class Page2GameOver():
         }
         self.bg = Gfx.create_fixed(params)
         self.timer = 1
+        self.initTimer = 0
         params = {
                 "filePath": "resources/images/enemy.png",
                 "scale": 0.3,
@@ -66,6 +70,7 @@ class Page2GameOver():
         self.enemy.center_x = self.W / 6
 
     def update(self, deltaTime):
+        self.initTimer += deltaTime
         self.enemy.update_animation(deltaTime)
         timer_HM = 2
         timer_VS = 0.75
@@ -137,15 +142,15 @@ class Page2GameOver():
         self.process.selectPage(1)#start page
 
     def onKeyEvent(self, key, isPressed):
-        if not isPressed:
+        if not isPressed and self.initTimer>1:
             self.startGame(-1)
 
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
-        if not isPressed:
+        if not isPressed and self.initTimer>1:
             self.startGame(gamepadNum)
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
-        self.startGame(gamepadNum)
+        pass
 
     def onMouseMotionEvent(self, x, y, dx, dy):
         pass

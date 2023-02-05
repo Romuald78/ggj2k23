@@ -24,6 +24,7 @@ class Process:
     def selectPage(self, index):
         self.pageIndex = index
         self.currentPage = self.pages[self.pageIndex]
+        self.currentPage.refresh()
 
     ### ====================================================================================================
     ### INIT

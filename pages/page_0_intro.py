@@ -25,6 +25,9 @@ class Page0Intro():
         self.H = h
         self.process = process
 
+    def refresh(self):
+        pass
+
     def setup(self):
         params = {
             "filePath" : "resources/images/ggj2023.png",

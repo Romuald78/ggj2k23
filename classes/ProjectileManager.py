@@ -63,7 +63,10 @@ class ProjectileManager():
         self.projs.update()
 
     def draw(self):
-        self.projs.draw()
+        try:
+            self.projs.draw()
+        except:
+            pass #yolo
 
 
 

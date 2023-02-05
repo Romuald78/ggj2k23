@@ -13,7 +13,7 @@ class Root():
             "filePath": "resources/images/root.png",
              #"size": (250, 250),
             "filterColor": (255, 255, 255, 255),
-            "spriteBox":(1,3,770,640//3),
+            "spriteBox":(1,3,839,771//3),
             "startIndex":idx,
             "endIndex":idx,
             "frameDuration":1,

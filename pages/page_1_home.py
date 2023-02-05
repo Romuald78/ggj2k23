@@ -25,6 +25,9 @@ class Page1Home():
         self.H = h
         self.process = process
 
+    def refresh(self):
+        self.setup()
+
     def setup(self, config=None):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
         self.countdown = Countdown(self.camera,self.process,60)
