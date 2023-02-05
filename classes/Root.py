@@ -76,7 +76,7 @@ class Root():
             diff += 360
         if diff > 180:
             diff -= 360
-        diff = max( min(30, diff), -30)
+        diff = max( min(20, diff), -20)
         newRoot = Root( pos, targetAngle+diff) # TODO limit target angle
         self.nextRoot = newRoot
         return newRoot

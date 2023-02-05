@@ -31,14 +31,24 @@ class Branch():
         if not self.mustBeDestroyed:
             if self.lastRoot.hasGrown() and not self.duplicated:
                 # get relative angle to player
-                # TODO
                 dx = self.player.center_x - self.lastRoot.sprite.center_x
                 dy = self.player.center_y - self.lastRoot.sprite.center_y
                 targetAngle = math.atan2(dy,dx)*180/math.pi
-                if random.random() <= 0.05 and self.nbRoots >= 4:
+                diff = (targetAngle - self.lastRoot.sprite.angle + 3600) % 360
+                if diff > 180:
+                    diff -= 360
+                if diff < -180:
+                    diff += 360
+                maxTurn = 10
+                if abs(diff) > maxTurn:
+                    diff = min(maxTurn, max(-maxTurn, diff))
+                targetAngle = self.lastRoot.sprite.angle + diff
+                if random.random() <= 0.05 and self.nbRoots >= 5:
                     self.enemyMgr.createEnemy( self.lastRoot.getNextPosition(targetAngle) )
                     self.duplicated = True
                 else:
+                    if self.nbRoots <= 3:
+                        targetAngle = self.lastRoot.sprite.angle + random.randint(-45,45)
                     newRoot = self.lastRoot.addNextRoot(targetAngle)
                     self.lastRoot = newRoot
                     self.branchMgr.addRoot(newRoot)

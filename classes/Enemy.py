@@ -16,6 +16,7 @@ class Enemy(IDamage,IGunner):
         self.sprite = sprite
         self.branches = []
         self.mustBeDestroyed = False
+        self.initAng = 0
 
     def addBranch(self, brnch):
         self.branches.append(brnch)
