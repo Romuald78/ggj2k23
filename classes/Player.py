@@ -1,4 +1,5 @@
 import math
+from random import randint
 
 from classes.IDamage import IDamage
 from classes.IGunner import IGunner
@@ -114,12 +115,16 @@ class Player(IGunner,IDamage):
     def update(self, deltaTime):
         self.hitTimer -= deltaTime
         if(self.hitTimer < 0):
-            self.bodyL.color = (255, 255, 255, 255)
-            self.bodyR.color = (255, 255, 255, 255)
-            self.bodyIdleL.color = (255, 255, 255, 255)
-            self.bodyIdleR.color = (255, 255, 255, 255)
-            self.gunL.color =  (255, 255, 255, 255)
-            self.gunR.color = (255, 255, 255, 255)
+            color = (255,255,255,255)
+        else:
+            value = randint(0,4) * 63
+            color = (255, value, value, 255)
+        self.bodyL.color = color
+        self.bodyR.color = color
+        self.bodyIdleL.color = color
+        self.bodyIdleR.color = color
+        self.gunL.color =  color
+        self.gunR.color = color
 
         self.bodyR.update_animation(deltaTime)
         self.bodyL.update_animation(deltaTime)
@@ -177,12 +182,6 @@ class Player(IGunner,IDamage):
         return self.bodyL
 
     def triggerHitEffect(self):
-        self.bodyL.color = (255, 0, 0, 255)
-        self.bodyR.color = (255, 0, 0, 255)
-        self.bodyIdleL.color = (255, 0, 0, 255)
-        self.bodyIdleR.color = (255, 0, 0, 255)
-        self.gunL.color = (255, 0, 0, 255)
-        self.gunR.color = (255, 0, 0, 255)
         self.hitTimer = 0.1
 
     def isMoving(self):

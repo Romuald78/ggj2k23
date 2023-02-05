@@ -1,8 +1,11 @@
 ### ====================================================================================================
 ### IMPORTS
 ### ====================================================================================================
-
+from pages.page_0_intro import Page0Intro
+from pages.page_0_splash import Page0Splash
 from pages.page_1_home import Page1Home
+
+
 
 
 class Process:
@@ -18,6 +21,10 @@ class Process:
         self.SCREEN_HEIGHT = int(height * ratio)
         self.window = window
 
+    def selectPage(self, index):
+        self.pageIndex = index
+        self.currentPage = self.pages[self.pageIndex]
+
     ### ====================================================================================================
     ### INIT
     ### ====================================================================================================
@@ -25,7 +32,9 @@ class Process:
         # Add all pages
         self.pages = []
         # Instanciate all pages
-        self.pages.append(Page1Home(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window))
+        self.pages.append( Page0Intro (self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
+        self.pages.append( Page0Splash(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
+        self.pages.append( Page1Home  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
         # Set first page
         self.pageIndex = 0
         self.currentPage = self.pages[self.pageIndex]

@@ -19,13 +19,14 @@ DEBUG_REMOVE_ENEMY_PROJECTILES = False
 
 class Page1Home():
 
-    def __init__(self, w, h, window: arcade.Window):
+    def __init__(self, w, h, window: arcade.Window, process=None):
         super().__init__()
         self.window = window
         self.W = w
         self.H = h
+        self.process = process
 
-    def setup(self):
+    def setup(self, config=None):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
         self.countdown = Countdown(self.camera)
         self.playerProjectileManager = ProjectileManager((2000,2000))
@@ -44,7 +45,14 @@ class Page1Home():
         self.collMgrEnemy = CollisionMgr([self.player.getBody()], self.enemyProjectileManager.projs)
         self.background = Background(self.camera)
 
+        self.music = arcade.load_sound("resources/sound/VampireSurvivorGGJ-V2.mp3")
+        self.started = False
+
     def update(self, deltaTime):
+        if not self.started:
+            self.started = True
+            arcade.play_sound(self.music, 1.0, 0.0, True)
+
         self.background.update(deltaTime)
         self.player.update(deltaTime)
         self.playerProjectileManager.update(deltaTime)

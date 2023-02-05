@@ -48,10 +48,18 @@ class EnemyManager():
         sprite.center_y = initPos[1]
         sprite.userData = Enemy(sprite, self.projectileManager)
         self.enemies.append(sprite)
-        # create first branch of flower
-        brnch = Branch( initPos, 0, self.branchMgr, self.player )
-        sprite.userData.addBranch(brnch)
 
+        if random.random() <= 0.25:
+            # create first branch of flower
+            brnch1 = Branch( initPos, random.randint(0,360), self.branchMgr, self, self.player )
+            sprite.userData.addBranch(brnch1)
+            # Create a second branch (sometimes)
+            brnch2 = Branch( initPos, random.randint(0,360), self.branchMgr, self, self.player )
+            sprite.userData.addBranch(brnch2)
+        else:
+            # create first branch of flower
+            brnch1 = Branch(initPos, random.randint(0, 360), self.branchMgr, self, self.player)
+            sprite.userData.addBranch(brnch1)
 
     def checkRemove(self, sprite):
         # Remove sprite if life time is over
@@ -86,6 +94,7 @@ class EnemyManager():
             y = y * 1.0 * self.camera.H / self.camera.W
             x += self.camera.x
             y += self.camera.y
+
             self.createEnemy((x, y))
 
     def draw(self):
