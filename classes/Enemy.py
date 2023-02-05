@@ -24,8 +24,8 @@ class Enemy(IDamage,IGunner):
 
     def __init__(self, sprite, projectileManager, hp = 1, dmg = 1):
         self.elitness = self.getElitness()
-        #self.initialColor = (255, 255, int(((1-(self.elitness/MAX_ELITE))*55)+200), 255)
-        self.initialColor = Filter
+        self.initialColor = (255, 255, int(((1-(self.elitness/MAX_ELITE))*55)+200), 255)
+        #self.initialColor = Filter
         IDamage.__init__(self,hp*self.elitness*3, dmg*self.elitness)
         IGunner.__init__(self,ENEMY_PROJ, projectileManager,1.25)
         self.projectileManager = projectileManager
@@ -57,7 +57,10 @@ class Enemy(IDamage,IGunner):
     def update(self, deltaTime):
         self.hitTimer -= deltaTime
         if(self.hitTimer < 0):
-            self.sprite.color = self.initialColor
+            if self.mustBeDestroyed:
+                self.sprite.color = Filter
+            else:
+                self.sprite.color = self.initialColor
         if self.hp <= 0:
             self.destroy()
         # update branches if needed
