@@ -8,8 +8,9 @@ from core.utils.utils import Gfx
 
 class Player(IGunner,IDamage):
 
-    def __init__(self, projectileManager, initPos=(0, 0),maxHP = 50):
+    def __init__(self, projectileManager,camera, initPos=(0, 0),maxHP = 10):
         self.maxHP = maxHP
+        self.camera = camera
         IGunner.__init__(self,PLAYER_PROJ, projectileManager, 0.15)
         IDamage.__init__(self,maxHP,2)
         playerScale = 0.50
@@ -150,6 +151,16 @@ class Player(IGunner,IDamage):
         self.shootTimer += deltaTime
         self.bodyL.center_x += self.speed_x * self.SPEED * deltaTime
         self.bodyL.center_y += self.speed_y * self.SPEED * deltaTime
+
+        if not (self.center_x > -(self.camera.maxWidth-40) and self.center_x < (self.camera.maxWidth-40)) :
+            #revert
+            self.bodyL.center_x -= self.speed_x * self.SPEED * deltaTime
+
+        if not (self.center_y > -(self.camera.maxHeight-60) and self.center_y < (self.camera.maxHeight-60)) :
+            #revert
+            self.bodyL.center_y -= self.speed_y * self.SPEED * deltaTime
+
+
         self.bodyR.center_x = self.bodyL.center_x
         self.bodyR.center_y = self.bodyL.center_y
         self.bodyIdleL.center_x = self.bodyL.center_x

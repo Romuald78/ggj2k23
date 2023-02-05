@@ -14,10 +14,11 @@ class CollisionMgr():
             if(len(collidings)>0):
                 try:
                     A = collidings[0].userData
-                    A.reduceHP(B.getDMG())
-                    B.reduceHP(A.getDMG())
-                    A.triggerHitEffect()
-                    B.triggerHitEffect()
+                    if(A.hp>0 and B.hp>0):
+                        A.reduceHP(B.getDMG())
+                        B.reduceHP(A.getDMG())
+                        A.triggerHitEffect()
+                        B.triggerHitEffect()
 
                 except Exception as ex:
                     print(ex)
