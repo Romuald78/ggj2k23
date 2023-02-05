@@ -36,6 +36,12 @@ class Page1Home():
                 "position" : (self.camera.x,self.camera.y + 2*self.H)
             }
         self.win = Gfx.create_fixed(params)
+        params = {
+            "filePath": "resources/images/win.png",
+            "position": (self.camera.x, self.camera.y + 2 * self.H),
+            "flipH" : True
+        }
+        self.lose = Gfx.create_fixed(params)
         self.playerProjectileManager = ProjectileManager()
         self.enemyProjectileManager = ProjectileManager()
         self.player = Player(self.playerProjectileManager, self.camera, initPos=(500, 500))
@@ -97,9 +103,9 @@ class Page1Home():
             # move win or lose
             spr = self.win
             if self.endGame == "lose":
-                pass # TODO
+                spr = self.lose
             spr.center_x = self.camera.x
-            spr.center_y = spr.center_y * 0.95 + 0.05*self.H/2
+            spr.center_y = spr.center_y * 0.95 + 0.05*self.camera.y
             self.endTime -= deltaTime
             if self.endTime < 0:
                 self.endTime = 0
@@ -114,6 +120,7 @@ class Page1Home():
         self.countdown.draw()
         self.HPBar.draw()
         self.win.draw()
+        self.lose.draw()
         arcade.draw_rectangle_outline(0, 0, self.camera.maxWidth*2, self.camera.maxHeight*2,
                                       (200,255,200,128), 10)
 
