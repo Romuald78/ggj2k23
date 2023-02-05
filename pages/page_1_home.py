@@ -12,6 +12,7 @@ from classes.EnemyManager import EnemyManager
 from classes.HPBar import HPBar
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
+from core.utils.utils import Gfx
 
 DEBUG_REMOVE_ENEMY_PROJECTILES = False
 
@@ -30,10 +31,15 @@ class Page1Home():
 
     def setup(self, config=None):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
-        self.countdown = Countdown(self.camera,self.process,60)
+        params = {
+                "filePath": "resources/images/win.png",
+                "position" : (self.camera.x,self.camera.y + 2*self.H)
+            }
+        self.win = Gfx.create_fixed(params)
         self.playerProjectileManager = ProjectileManager()
         self.enemyProjectileManager = ProjectileManager()
-        self.player = Player(self.playerProjectileManager, self.camera ,initPos=(500, 500))
+        self.player = Player(self.playerProjectileManager, self.camera, initPos=(500, 500))
+        self.countdown = Countdown(self.camera,self.process,60)
         self.HPBar = HPBar(self.camera,self.player,self.process)
         self.branchMgr = BranchManager()
         self.endTime = 2
@@ -54,6 +60,7 @@ class Page1Home():
 
         for i in range(0,4):
             self.enemyManager.randomSpawn()
+
 
     def update(self, deltaTime):
         if not self.started:
@@ -84,6 +91,12 @@ class Page1Home():
                                 self.player.bodyL.center_y )
 
         if self.endGame is not None:
+            # move win or lose
+            spr = self.win
+            if self.endGame == "lose":
+                pass # TODO
+            spr.center_x = self.camera.x
+            spr.center_y = spr.center_y * 0.95 + 0.05*self.H/2
             self.endTime -= deltaTime
             if self.endTime < 0:
                 self.endTime = 0
@@ -97,6 +110,7 @@ class Page1Home():
         self.player.draw()
         self.countdown.draw()
         self.HPBar.draw()
+        self.win.draw()
         arcade.draw_rectangle_outline(0, 0, self.camera.maxWidth*2, self.camera.maxHeight*2,
                                       (200,255,200,128), 10)
 

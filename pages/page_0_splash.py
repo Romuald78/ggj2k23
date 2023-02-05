@@ -15,12 +15,10 @@ class Page0Splash():
         self.process = process
 
     def refresh(self):
-        try:
-            self.window.set_viewport(0,self.W,0,self.H)
-        except Exception as ex:
-            print(ex)
+        self.refreshBool = True
 
     def setup(self):
+        self.refreshBool = False
         self.steps = 0
         params = {
             "filePath" : "resources/images/hazmat_boy.png",
@@ -80,6 +78,9 @@ class Page0Splash():
         self.push.center_y = self.H / 8
 
     def update(self, deltaTime):
+        if self.refreshBool == True:
+            self.refreshBool = False
+            self.window.set_viewport(0,self.W,0,self.H)
         self.enemy.update_animation(deltaTime)
         timer_HM = 2
         timer_VS = 0.75
