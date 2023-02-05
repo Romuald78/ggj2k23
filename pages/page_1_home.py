@@ -36,9 +36,8 @@ class Page1Home():
             }
         self.win = Gfx.create_fixed(params)
         params = {
-            "filePath": "resources/images/win.png",
+            "filePath": "resources/images/lose.png",
             "position": (self.camera.x, self.camera.y + 2 * self.H),
-            "flipH" : True
         }
         self.lose = Gfx.create_fixed(params)
         self.playerProjectileManager = ProjectileManager()
@@ -127,8 +126,9 @@ class Page1Home():
         self.player.draw()
         self.countdown.draw()
         self.HPBar.draw()
-        if self.endGame != None:
+        if self.endGame == "win":
             self.win.draw()
+        if self.endGame == "lose":
             self.lose.draw()
         arcade.draw_rectangle_outline(0, 0, self.camera.maxWidth*2, self.camera.maxHeight*2,
                                       (200,255,200,128), 10)
