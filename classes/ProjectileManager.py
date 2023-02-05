@@ -49,7 +49,7 @@ class ProjectileManager():
         sprite.scale = projectile_["scale"]
         sprite.center_x = initPos[0]
         sprite.center_y = initPos[1]
-        sprite.lifeTime = 2.0
+        sprite.lifeTime = 1.0
         sprite.hp = 1
         sprite.angle = 180 * math.atan2(dy,dx) / math.pi
         sprite.direction = (dx,dy)

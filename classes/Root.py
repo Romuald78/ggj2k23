@@ -57,11 +57,27 @@ class Root():
                 if self.sprite.scale <= 0:
                     self.sprite.scale = 0
 
-    def addNextRoot(self, targetAngle):
+    def getNextPosition(self, targetAngle):
         ang = self.sprite.angle
-        x = self.sprite.center_x + 0.35 * self.sprite.width * math.cos(ang*math.pi/180)
+        x = self.sprite.center_x + 0.35 * self.sprite.width * math.cos(ang * math.pi / 180)
         y = self.sprite.center_y + 0.35 * self.sprite.width * math.sin(ang * math.pi / 180)
-        newRoot = Root( (x,y), targetAngle) # TODO limit target angle
+        return (x,y)
+
+    def addNextRoot(self, targetAngle):
+        pos = self.getNextPosition(targetAngle)
+        src = (self.sprite.angle + 3600) % 360
+        dst = (targetAngle + 3600) % 360
+        if src > 180:
+            src -= 360
+        if dst > 180:
+            dst -= 360
+        diff = dst-src
+        if diff < -180:
+            diff += 360
+        if diff > 180:
+            diff -= 360
+        diff = max( min(30, diff), -30)
+        newRoot = Root( pos, targetAngle+diff) # TODO limit target angle
         self.nextRoot = newRoot
         return newRoot
 

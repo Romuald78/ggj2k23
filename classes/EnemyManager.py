@@ -49,7 +49,7 @@ class EnemyManager():
         sprite.userData = Enemy(sprite, self.projectileManager)
         self.enemies.append(sprite)
         # create first branch of flower
-        brnch = Branch( initPos, 0, self.branchMgr, self.player )
+        brnch = Branch( initPos, 0, self.branchMgr, self, self.player )
         sprite.userData.addBranch(brnch)
 
 
