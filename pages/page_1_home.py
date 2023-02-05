@@ -50,8 +50,10 @@ class Page1Home():
 
         self.music = arcade.load_sound("resources/sound/VampireSurvivorGGJ-V2.mp3")
         self.started = False
+        self.endGame = None
 
         for i in range(0,4):
+            self.enemyManager.randomSpawn()
 
     def update(self, deltaTime):
         if not self.started:
@@ -99,17 +101,18 @@ class Page1Home():
                                       (200,255,200,128), 10)
 
     def onKeyEvent(self, key, isPressed):
-        if key == arcade.key.Q:
-            self.player.moveLeft(isPressed)
-        if key == arcade.key.D:
-            self.player.moveRight(isPressed)
-        if key == arcade.key.Z:
-            self.player.moveUp(isPressed)
-        if key == arcade.key.S:
-            self.player.moveDown(isPressed)
+        if self.endGame is None:
+            if key == arcade.key.Q:
+                self.player.moveLeft(isPressed)
+            if key == arcade.key.D:
+                self.player.moveRight(isPressed)
+            if key == arcade.key.Z:
+                self.player.moveUp(isPressed)
+            if key == arcade.key.S:
+                self.player.moveDown(isPressed)
 
-        if self.endTime <= 0 and not isPressed:
-            self.process.selectPage(1)
+            if self.endTime <= 0 and not isPressed:
+                self.process.selectPage(1)
 
 
     def onMouseMotionEvent(self, x, y, dx, dy):

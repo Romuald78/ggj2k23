@@ -15,7 +15,10 @@ class Page0Splash():
         self.process = process
 
     def refresh(self):
-        self.window.set_viewport(0,self.W,0,self.H)
+        try:
+            self.window.set_viewport(0,self.W,0,self.H)
+        except Exception as ex:
+            print(ex)
 
     def setup(self):
         self.steps = 0
