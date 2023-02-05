@@ -2,17 +2,6 @@ import random
 
 import arcade
 
-from classes.Branch import Branch
-from classes.BranchManager import BranchManager
-from classes.BackGround import Background
-from classes.Camera import Camera
-from classes.Collisions import CollisionMgr
-from classes.Countdown import Countdown
-from classes.EnemyManager import EnemyManager
-from classes.HPBar import HPBar
-from classes.Player import Player
-from classes.ProjectileManager import ProjectileManager
-from classes.Root import Root
 from core.utils.utils import Gfx
 
 
@@ -66,7 +55,7 @@ class Page0Splash():
                 "filePath": "resources/images/enemy.png",
                 "scale": 0.3,
                 "filterColor": (255, 255, 255, 0),
-                "spriteBox": (3, 1, 981//3, 356),
+                "spriteBox": (3, 1, 1376//4, 356),
                 "startIndex": 0,
                 "endIndex": 2,
                 "frameDuration": 0.30,
