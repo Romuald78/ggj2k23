@@ -72,8 +72,7 @@ class Page0Intro():
             self.imgs[self.index].draw()
 
     def onKeyEvent(self, key, isPressed):
-        if not isPressed:
-            self.startGame()
+        pass
 
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
         if not hasattr(self,"initTimer"):

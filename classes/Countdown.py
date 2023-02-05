@@ -36,10 +36,8 @@ class Countdown:
                     "angle":19
                     })
 
-    def update(self, deltaTime):
-        if(self.timeSecondes < 0):
-            self.timeSecondes += 1000000000
-            print("You WIN")
-            #self.process.setup()
-            self.process.selectPage(4)
-        self.timeSecondes -= deltaTime
+    def update(self,deltaTime):
+        if self.timeSecondes > 0:
+            self.timeSecondes -= deltaTime
+        if self.timeSecondes < 0:
+            self.timeSecondes = 0

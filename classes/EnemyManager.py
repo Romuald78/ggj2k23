@@ -23,10 +23,10 @@ class EnemyManager():
                 "filePath": "resources/images/enemy.png",
                 "scale": 0.3,
                 "filterColor": (255, 255, 255, 255),
-                "spriteBox": (3, 1, 1376//4, 356),
+                "spriteBox": (4, 1, 1376//4, 356),
                 "startIndex": 0,
-                "endIndex": 2,
-                "frameDuration": 0.30,
+                "endIndex": 3,
+                "frameDuration": 0.25,
             }
         }
         self.SPAWN_TIME = 0.25 * 10 # TODO # secondes betwwen enemy spawn

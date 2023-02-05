@@ -305,7 +305,7 @@ def main():
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '')
     os.chdir(file_path)
 
-    game = MyGame(1920, 1080, 0.8, TITLE)
+    game = MyGame(1920, 1080, 1.0, TITLE)
     game.setup()
     arcade.run()
 

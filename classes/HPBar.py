@@ -31,9 +31,3 @@ class HPBar:
 
         self.sprite.draw()
 
-    def update(self, deltatime):
-
-        if(self.player.hp < 0):
-            print("You Died")
-            self.process.selectPage(3)
-            self.player.hp = 10000000
