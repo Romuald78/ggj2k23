@@ -40,25 +40,25 @@ class MyGame(arcade.Window):
     # PRIVATE METHODS FOR INPUT MANAGEMENT
     # ----------------------------------
     def __onButtonPressed(self, _gamepad, button):
-        idx = self.gamepads[_gamepad]
+        idx = self.gamepadsLegacy[_gamepad]
         if(type(button) == "string"):
             self.onButtonPressed(idx, button)
         else:
             self.onButtonPressed(idx, MyGame.BUTTON_NAMES[button])
 
     def __onButtonReleased(self, _gamepad, button):
-        idx = self.gamepads[_gamepad]
+        idx = self.gamepadsLegacy[_gamepad]
         if(type(button) == "string"):
             self.onButtonReleased(idx, button)
         else:
             self.onButtonReleased(idx, MyGame.BUTTON_NAMES[button])
 
     def __onCrossMove(self, _gamepad, x, y):
-        idx = self.gamepads[_gamepad]
+        idx = self.gamepadsLegacy[_gamepad]
         self.onCrossMove(idx, x, -y)
 
     def __onAxisMove(self, _gamepad, axis, value):
-        idx = self.gamepads[_gamepad]
+        idx = self.gamepadsLegacy[_gamepad]
         self.onAxisMove(idx, axis, value)
 
     # ----------------------------------
@@ -87,6 +87,21 @@ class MyGame(arcade.Window):
         else:
             self.set_viewport(0, self.process.SCREEN_WIDTH, 0, self.process.SCREEN_HEIGHT)
 
+
+    def on_stick_motion(self,controller, name, x_value, y_value):
+        print(controller,controller.name,name,x_value,y_value)
+        #leftstick-x
+        #leftstick-y
+        #rightstick-x
+        #rightstick-y
+        if(name == "leftstick"):
+            self.process.onAxisEvent(controller.name, "X", x_value)
+            self.process.onAxisEvent(controller.name, "Y", -y_value)
+
+        if(name == "rightstick"):
+            self.process.onAxisEvent(controller.name, "RX", x_value)
+            self.process.onAxisEvent(controller.name, "RY", -y_value)
+
     # ----------------------------------
     # CONSTRUCTOR
     # ----------------------------------
@@ -97,23 +112,39 @@ class MyGame(arcade.Window):
         self.process = Process(width, height, ratio, self)
         # set application window background color
         arcade.set_background_color(arcade.color.BLACK)
-        # Store gamepad list
-        self.gamepads = arcade.get_joysticks()
-        print(self.gamepads)
-        # check every connected gamepad
-        if self.gamepads:
-            for g in self.gamepads:
-                # link all gamepad callbacks to the current class methods
-                g.open()
-                g.on_joybutton_press = self.__onButtonPressed
-                g.on_joybutton_release = self.__onButtonReleased
-                g.on_joyhat_motion = self.__onCrossMove
-                g.on_joyaxis_motion = self.__onAxisMove
-                # transform list into a dictionary to get its index faster
-            self.gamepads = {self.gamepads[idx]: idx for idx in range(len(self.gamepads))}
+        if pyglet.compat_platform in ('cygwin', 'win32'):
+            # Store gamepad list
+            self.gamepads = pyglet.input.get_controllers()
+            #https://pyglet.readthedocs.io/en/latest/programming_guide/input.html
+            print(self.gamepads)
+            # check every connected gamepad
+            if self.gamepads:
+                for g in self.gamepads:
+                    # link all gamepad callbacks to the current class methods
+                    g.open()
+                    g.on_stick_motion = self.on_stick_motion
+                    # transform list into a dictionary to get its index faster
+            else:
+                print("There are no Gamepad connected !")
+                self.gamepads = None
         else:
-            print("There are no Gamepad connected !")
-            self.gamepads = None
+            # Store gamepad list
+            self.gamepads = arcade.get_joysticks()
+            print(self.gamepads)
+            # check every connected gamepad
+            if self.gamepads:
+                for g in self.gamepads:
+                    # link all gamepad callbacks to the current class methods
+                    g.open()
+                    g.on_joybutton_press = self.__onButtonPressed
+                    g.on_joybutton_release = self.__onButtonReleased
+                    g.on_joyhat_motion = self.__onCrossMove
+                    g.on_joyaxis_motion = self.__onAxisMove
+                    # transform list into a dictionary to get its index faster
+                self.gamepadsLegacy = {self.gamepads[idx]: idx for idx in range(len(self.gamepads))}
+            else:
+                print("There are no Gamepad connected !")
+                self.gamepads = None
         # full screen config
         self.appW = None
         self.appH = None

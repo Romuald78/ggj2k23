@@ -84,6 +84,9 @@ class Page1Home():
         self.player.viewTo(x, y)
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
+        if not hasattr(self,"player") :
+            return
+
         if axisName == "X":
             if abs(analogValue) <= 0.15:
                 analogValue = 0
