@@ -36,6 +36,7 @@ class Page1Home():
         self.player = Player(self.playerProjectileManager, self.camera ,initPos=(500, 500))
         self.HPBar = HPBar(self.camera,self.player,self.process)
         self.branchMgr = BranchManager()
+        self.endTime = 2
         self.enemyManager = EnemyManager(self.camera,
                                          self.enemyProjectileManager,
                                          self.branchMgr,
@@ -51,7 +52,6 @@ class Page1Home():
         self.started = False
 
         for i in range(0,4):
-            self.enemyManager.randomSpawn()
 
     def update(self, deltaTime):
         if not self.started:
@@ -59,19 +59,32 @@ class Page1Home():
             arcade.play_sound(self.music, 1.0, 0.0, True)
 
         self.background.update(deltaTime)
-        self.player.update(deltaTime)
-        self.playerProjectileManager.update(deltaTime)
-        if not DEBUG_REMOVE_ENEMY_PROJECTILES:
-            self.enemyProjectileManager.update(deltaTime)
-        self.enemyManager.update(deltaTime)
-        self.collMgr.update()
-        self.branchMgr.update(deltaTime)
-        self.collMgrEnemy.update()
-        self.camera.update( self.player.bodyL.center_x,
-                            self.player.bodyL.center_y )
-        self.countdown.update(deltaTime)
 
-        self.HPBar.update(deltaTime)
+        if self.endGame is None and self.started:
+
+            if self.player.hp <= 0.0 and self.endGame is None:
+                self.endGame = "lose"
+                print("YOU LOSE")
+            if self.countdown.timeSecondes <= 0.0 and self.endGame is None:
+                self.endGame = "win"
+                print("YOU WIN")
+
+            self.player.update(deltaTime)
+            self.playerProjectileManager.update(deltaTime)
+            if not DEBUG_REMOVE_ENEMY_PROJECTILES:
+                self.enemyProjectileManager.update(deltaTime)
+            self.enemyManager.update(deltaTime)
+            self.collMgr.update()
+            self.branchMgr.update(deltaTime)
+            self.collMgrEnemy.update()
+            self.countdown.update(deltaTime)
+            self.camera.update( self.player.bodyL.center_x,
+                                self.player.bodyL.center_y )
+
+        if self.endGame is not None:
+            self.endTime -= deltaTime
+            if self.endTime < 0:
+                self.endTime = 0
 
     def draw(self):
         self.background.draw()
@@ -95,6 +108,10 @@ class Page1Home():
         if key == arcade.key.S:
             self.player.moveDown(isPressed)
 
+        if self.endTime <= 0 and not isPressed:
+            self.process.selectPage(1)
+
+
     def onMouseMotionEvent(self, x, y, dx, dy):
         self.player.viewTo(x, y)
 
@@ -102,18 +119,21 @@ class Page1Home():
         if not hasattr(self,"player") :
             return
 
-        if axisName == "X":
-            if abs(analogValue) <= 0.15:
-                analogValue = 0
-            self.player.speed_x = analogValue
-        if axisName == "Y":
-            if abs(analogValue) <= 0.15:
-                analogValue = 0
-            self.player.speed_y = -analogValue
-        if axisName == "RX":
-            self.player.view_x = analogValue
-        if axisName == "RY":
-            self.player.view_y = analogValue
+        if self.endGame is None:
+            if axisName == "X":
+                if abs(analogValue) <= 0.15:
+                    analogValue = 0
+                self.player.speed_x = analogValue
+            if axisName == "Y":
+                if abs(analogValue) <= 0.15:
+                    analogValue = 0
+                self.player.speed_y = -analogValue
+            if axisName == "RX":
+                self.player.view_x = analogValue
+            if axisName == "RY":
+                self.player.view_y = analogValue
 
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
-        pass
+        if self.endTime <= 0 and not isPressed:
+            self.process.selectPage(1)
+

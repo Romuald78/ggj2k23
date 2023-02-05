@@ -15,7 +15,7 @@ class Page0Splash():
         self.process = process
 
     def refresh(self):
-        pass
+        self.window.set_viewport(0,self.W,0,self.H)
 
     def setup(self):
         self.steps = 0
@@ -58,10 +58,10 @@ class Page0Splash():
                 "filePath": "resources/images/enemy.png",
                 "scale": 0.3,
                 "filterColor": (255, 255, 255, 0),
-                "spriteBox": (3, 1, 1376//4, 356),
+                "spriteBox": (4, 1, 1376//4, 356),
                 "startIndex": 0,
-                "endIndex": 2,
-                "frameDuration": 0.30,
+                "endIndex": 3,
+                "frameDuration": 0.25,
         }
         self.enemy = Gfx.create_animated(params)
         self.enemy.scale = 1.25
@@ -147,11 +147,12 @@ class Page0Splash():
             self.push.draw()
 
     def startGame(self, ctrlID):
-        self.process.selectPage(2)
+        if self.steps >= 6:
+            self.process.selectPage(2)
 
     def onKeyEvent(self, key, isPressed):
         if not isPressed:
-            self.startGame(-1)
+            self.startGame(2)
 
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
         if not hasattr(self,"initTimer"):
