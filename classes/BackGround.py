@@ -4,7 +4,7 @@ import random
 import arcade
 
 from classes import Camera
-from core.utils.utils import Gfx, Sound
+from core.utils.utils import Gfx
 
 
 class Background:

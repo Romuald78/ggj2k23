@@ -73,17 +73,23 @@ class Page1Home():
     def update(self, deltaTime):
         if not self.started:
             self.started = True
-            arcade.play_sound(self.music, 1.0, 0.0, True)
+
+        if(not hasattr(self,"musicPlayer")):
+            self.musicPlayer = arcade.play_sound(self.music, 1.0, 0.0, True)
 
         self.background.update(deltaTime)
 
         if self.endGame is None and self.started:
 
             if self.player.hp <= 0.0 and self.endGame is None:
+                arcade.play_sound(arcade.load_sound("resources/sound/game_over.mp3"))
                 self.endGame = "lose"
+                self.music.stop(self.musicPlayer)
                 print("YOU LOSE")
             if self.countdown.timeSecondes <= 0.0 and self.endGame is None:
+                arcade.play_sound(arcade.load_sound("resources/sound/win.mp3"))
                 self.endGame = "win"
+                self.music.stop(self.musicPlayer)
                 self.GLOBAL_LEVEL+=1
                 print("level :"+str(self.GLOBAL_LEVEL))
                 print("YOU WIN LVL+1")
