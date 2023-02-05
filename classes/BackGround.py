@@ -34,8 +34,6 @@ class Background:
         })
 
     def __init__(self, camera: Camera, size=3000):
-        sound = arcade.load_sound("resources/sound/VampireSurvivorGGJ-V2.mp3")
-        arcade.play_sound(sound,1.0,0.0,True)
         self.tiles = arcade.SpriteList()
         self.deco = arcade.SpriteList()
         self.camera = camera

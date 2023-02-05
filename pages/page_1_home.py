@@ -45,7 +45,14 @@ class Page1Home():
         self.collMgrEnemy = CollisionMgr([self.player.getBody()], self.enemyProjectileManager.projs)
         self.background = Background(self.camera)
 
+        self.music = arcade.load_sound("resources/sound/VampireSurvivorGGJ-V2.mp3")
+        self.started = False
+
     def update(self, deltaTime):
+        if not self.started:
+            self.started = True
+            arcade.play_sound(self.music, 1.0, 0.0, True)
+
         self.background.update(deltaTime)
         self.player.update(deltaTime)
         self.playerProjectileManager.update(deltaTime)

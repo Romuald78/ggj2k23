@@ -160,6 +160,10 @@ class Page0Splash():
         if not isPressed:
             self.startGame(-1)
 
+    def onButtonEvent(self, gamepadNum, buttonName, isPressed):
+        if not isPressed:
+            self.startGame(gamepadNum)
+
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
         self.startGame(gamepadNum)
 
