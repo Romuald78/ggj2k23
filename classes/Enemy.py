@@ -1,7 +1,5 @@
 import random
-from random import randint
 
-from classes.Branch import Branch
 from classes.IDamage import IDamage
 from classes.IGunner import IGunner
 from classes.ProjectileManager import ENEMY_PROJ
@@ -15,15 +13,13 @@ class Enemy(IDamage,IGunner):
     def getElitness(self):
         i = random.randint(0, 100)
         if i<50:
-            return 0
+            return 1
         if i<70:
             return 1
         if i<80:
             return 2
         if i<90:
             return 3
-        if i<95:
-            return 4
         return 5
 
     def __init__(self, sprite, projectileManager, hp = 1, dmg = 1):
@@ -43,10 +39,11 @@ class Enemy(IDamage,IGunner):
         self.branches.append(brnch)
 
     def destroy(self):
-        self.mustBeDestroyed = True
-        self.sprite.color = Filter
-        for b in self.branches:
-            b.destroy()
+        if(not self.mustBeDestroyed):
+            self.mustBeDestroyed = True
+            self.sprite.color = Filter
+            for b in self.branches:
+                b.destroy()
 
     def getSpeed(self):
         return (0,0)
