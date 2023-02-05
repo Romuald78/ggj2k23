@@ -84,18 +84,20 @@ class EnemyManager():
 
         if self.lastSpawn > self.SPAWN_TIME:
             self.lastSpawn -= self.SPAWN_TIME
+            self.randomSpawn()
 
-            radius = max(self.camera.W, self.camera.H) / 2
-            delta = min(self.camera.W, self.camera.H) / 2
-            radius += random.randint(0, delta)
-            ang = random.randint(0, 360)
-            x = radius * math.cos(ang * math.pi / 180)
-            y = radius * math.sin(ang * math.pi / 180)
-            y = y * 1.0 * self.camera.H / self.camera.W
-            x += self.camera.x
-            y += self.camera.y
+    def randomSpawn(self):
+        radius = max(self.camera.W, self.camera.H) / 2
+        delta = min(self.camera.W, self.camera.H) / 2
+        radius += random.randint(0, delta)
+        ang = random.randint(0, 360)
+        x = radius * math.cos(ang * math.pi / 180)
+        y = radius * math.sin(ang * math.pi / 180)
+        y = y * 1.0 * self.camera.H / self.camera.W
+        x += self.camera.x
+        y += self.camera.y
 
-            self.createEnemy((x, y))
+        self.createEnemy((x, y))
 
     def draw(self):
         self.enemies.draw()

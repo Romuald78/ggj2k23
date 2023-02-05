@@ -36,10 +36,10 @@ class Page1Home():
                 "position" : (self.camera.x,self.camera.y + 2*self.H)
             }
         self.win = Gfx.create_fixed(params)
-        self.countdown = Countdown(self.camera,self.process,6)
-        self.playerProjectileManager = ProjectileManager((2000,2000))
-        self.enemyProjectileManager = ProjectileManager((1000,1000))
-        self.player = Player(self.playerProjectileManager, initPos=(500, 500))
+        self.playerProjectileManager = ProjectileManager()
+        self.enemyProjectileManager = ProjectileManager()
+        self.player = Player(self.playerProjectileManager, self.camera, initPos=(500, 500))
+        self.countdown = Countdown(self.camera,self.process,60)
         self.HPBar = HPBar(self.camera,self.player,self.process)
         self.branchMgr = BranchManager()
         self.endTime = 2
@@ -58,6 +58,8 @@ class Page1Home():
         self.started = False
         self.endGame = None
 
+        for i in range(0,4):
+            self.enemyManager.randomSpawn()
 
 
     def update(self, deltaTime):
@@ -109,6 +111,8 @@ class Page1Home():
         self.countdown.draw()
         self.HPBar.draw()
         self.win.draw()
+        arcade.draw_rectangle_outline(0, 0, self.camera.maxWidth*2, self.camera.maxHeight*2,
+                                      (200,255,200,128), 10)
 
     def onKeyEvent(self, key, isPressed):
         if self.endGame is None:

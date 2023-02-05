@@ -8,6 +8,8 @@ class Camera():
         self.H = h
         self.x = 0
         self.y = 0
+        self.maxWidth = 1500
+        self.maxHeight = 1500
 
     def update(self, x, y):
         xm = x - self.W / 2
