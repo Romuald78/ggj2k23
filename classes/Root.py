@@ -3,6 +3,7 @@ import random
 
 from core.utils.utils import Gfx
 
+Filter = (200,128,128,56)
 
 class Root():
 
@@ -67,4 +68,4 @@ class Root():
 
     def destroy(self):
         self.mustBeDestroyed = True
-        self.sprite.color = (128,64,64)
+        self.sprite.color = Filter

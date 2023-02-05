@@ -11,3 +11,4 @@ class IDamage():
     def reduceHP(self, dmg):
         self.hp -= max(0, dmg)
 
+

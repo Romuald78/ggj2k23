@@ -4,6 +4,7 @@ from classes.Branch import Branch
 from classes.IDamage import IDamage
 from classes.IGunner import IGunner
 from classes.ProjectileManager import ENEMY_PROJ
+from classes.Root import Filter
 
 NEW_BRANCH_TIMER = 5
 
@@ -16,20 +17,28 @@ class Enemy(IDamage,IGunner):
         self.sprite = sprite
         self.branches = []
         self.mustBeDestroyed = False
+        self.hitTimer = 0
 
     def addBranch(self, brnch):
         self.branches.append(brnch)
 
     def destroy(self):
         self.mustBeDestroyed = True
-        self.sprite.color = (200,128,128)
+        self.sprite.color = Filter
         for b in self.branches:
             b.destroy()
 
     def getSpeed(self):
         return (0,0)
 
+    def triggerHitEffect(self):
+        self.sprite.color = (255, 0, 0, 255)
+        self.hitTimer = 0.1
+
     def update(self, deltaTime):
+        self.hitTimer -= deltaTime
+        if(self.hitTimer < 0):
+            self.sprite.color = (255, 255, 255, 255)
         if self.hp <= 0:
             self.destroy()
         # update branches if needed

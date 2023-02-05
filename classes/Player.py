@@ -56,6 +56,8 @@ class Player(IGunner,IDamage):
         self.gunR.scale = playerScale
         self.gunL.scale = playerScale
 
+        self.hitTimer = 0
+
         #collisions
         self.bodyL.userData = self
         self.bodyR.userData = self
@@ -110,6 +112,15 @@ class Player(IGunner,IDamage):
         return not self.isAlive()
 
     def update(self, deltaTime):
+        self.hitTimer -= deltaTime
+        if(self.hitTimer < 0):
+            self.bodyL.color = (255, 255, 255, 255)
+            self.bodyR.color = (255, 255, 255, 255)
+            self.bodyIdleL.color = (255, 255, 255, 255)
+            self.bodyIdleR.color = (255, 255, 255, 255)
+            self.gunL.color =  (255, 255, 255, 255)
+            self.gunR.color = (255, 255, 255, 255)
+
         self.bodyR.update_animation(deltaTime)
         self.bodyL.update_animation(deltaTime)
         self.gunR.update_animation(deltaTime)
@@ -165,10 +176,20 @@ class Player(IGunner,IDamage):
     def getBody(self):
         return self.bodyL
 
+    def triggerHitEffect(self):
+        self.bodyL.color = (255, 0, 0, 255)
+        self.bodyR.color = (255, 0, 0, 255)
+        self.bodyIdleL.color = (255, 0, 0, 255)
+        self.bodyIdleR.color = (255, 0, 0, 255)
+        self.gunL.color = (255, 0, 0, 255)
+        self.gunR.color = (255, 0, 0, 255)
+        self.hitTimer = 0.1
+
     def isMoving(self):
         return self.speed_x != 0 or self.speed_y !=0 or self.moveL or self.moveR or self.moveD or self.moveU
 
     def draw(self):
+
         if(self.isMoving()):
             if self.view_x >= 0:
                 self.bodyR.draw()
