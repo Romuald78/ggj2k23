@@ -28,7 +28,7 @@ class Enemy(IDamage,IGunner):
 
     def __init__(self, sprite, projectileManager, hp = 1, dmg = 1):
         self.elitness = self.getElitness()
-        self.initialColor = (255, 255, (1-(self.elitness/MAX_ELITE))*255, 255)
+        self.initialColor = (255, 255, ((1-(self.elitness/MAX_ELITE))*55)+200, 255)
         IDamage.__init__(self,hp*self.elitness*3, dmg*self.elitness)
         IGunner.__init__(self,ENEMY_PROJ, projectileManager,1.25)
         self.projectileManager = projectileManager
