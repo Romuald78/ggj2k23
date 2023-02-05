@@ -73,9 +73,10 @@ class Page1Home():
     def update(self, deltaTime):
         if not self.started:
             self.started = True
-
-        if(not hasattr(self,"musicPlayer")):
-            self.musicPlayer = arcade.play_sound(self.music, 1.0, 0.0, True)
+            if(not hasattr(self,"musicPlayer")):
+                self.musicPlayer = arcade.play_sound(self.music, 1.0, 0.0, True)
+            elif not self.musicPlayer.playing:
+                self.musicPlayer.play()
 
         self.background.update(deltaTime)
 
@@ -126,8 +127,9 @@ class Page1Home():
         self.player.draw()
         self.countdown.draw()
         self.HPBar.draw()
-        self.win.draw()
-        self.lose.draw()
+        if self.endGame != None:
+            self.win.draw()
+            self.lose.draw()
         arcade.draw_rectangle_outline(0, 0, self.camera.maxWidth*2, self.camera.maxHeight*2,
                                       (200,255,200,128), 10)
 
