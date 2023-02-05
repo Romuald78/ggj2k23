@@ -1,3 +1,4 @@
+import random
 from random import randint
 
 from classes.Branch import Branch
@@ -7,14 +8,32 @@ from classes.ProjectileManager import ENEMY_PROJ
 from classes.Root import Filter
 
 NEW_BRANCH_TIMER = 5
+MAX_ELITE = 5
 
 class Enemy(IDamage,IGunner):
 
+    def getElitness(self):
+        i = random.randint(0, 100)
+        if i<50:
+            return 0
+        if i<70:
+            return 1
+        if i<80:
+            return 2
+        if i<90:
+            return 3
+        if i<95:
+            return 4
+        return 5
+
     def __init__(self, sprite, projectileManager, hp = 1, dmg = 1):
-        IDamage.__init__(self,hp, dmg)
+        self.elitness = self.getElitness()
+        self.initialColor = (255, 255, (1-(self.elitness/MAX_ELITE))*255, 255)
+        IDamage.__init__(self,hp*self.elitness*3, dmg*self.elitness)
         IGunner.__init__(self,ENEMY_PROJ, projectileManager,1.25)
         self.projectileManager = projectileManager
         self.sprite = sprite
+        self.sprite.scale = self.sprite.scale * (1+(self.elitness/MAX_ELITE))
         self.branches = []
         self.mustBeDestroyed = False
         self.initAng = 0
@@ -39,7 +58,7 @@ class Enemy(IDamage,IGunner):
     def update(self, deltaTime):
         self.hitTimer -= deltaTime
         if(self.hitTimer < 0):
-            self.sprite.color = (255, 255, 255, 255)
+            self.sprite.color = self.initialColor
         if self.hp <= 0:
             self.destroy()
         # update branches if needed
