@@ -58,7 +58,10 @@ class Page1Home():
         self.started = False
         self.endGame = None
 
-        for i in range(0,4):
+        #15 trop dur
+        #10 level high
+        #5 normal
+        for i in range(0,10):
             self.enemyManager.randomSpawn()
 
 
