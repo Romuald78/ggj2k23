@@ -7,7 +7,7 @@ from core.utils.utils import Gfx
 
 class HPBar:
 
-    def __init__(self, camera: Camera, player: Player):
+    def __init__(self, camera: Camera, player: Player,process):
         self.camera = camera
         self.player = player
         self.sprite = Gfx.create_fixed({
@@ -16,6 +16,7 @@ class HPBar:
         })
         self.sprite.angle = 0
         self.sprite.scale = 0.6
+        self.process = process
 
     def draw(self):
 
@@ -34,4 +35,5 @@ class HPBar:
 
         if(self.player.hp < 0):
             print("You Died")
+            self.process.selectPage(3)
             self.player.hp = 10000000

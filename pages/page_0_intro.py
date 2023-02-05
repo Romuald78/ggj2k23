@@ -38,6 +38,7 @@ class Page0Intro():
         params["filePath"] = "resources/images/rphstudio.png"
         self.rph   = Gfx.create_fixed(params)
         self.timer = 0
+        self.initTimer = 0
         self.imgs  = [self.ggj, self.arcade, self.rph]
         self.index = 0
 
@@ -45,6 +46,7 @@ class Page0Intro():
         self.process.selectPage(1)
 
     def update(self, deltaTime):
+        self.initTimer+=deltaTime
         PERIOD = 1
         if self.index < len(self.imgs):
             self.timer += deltaTime
@@ -71,5 +73,13 @@ class Page0Intro():
             self.startGame()
 
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
+        if not hasattr(self,"initTimer"):
+            return
         if not isPressed:
             self.startGame()
+
+    def onMouseMotionEvent(self, x, y, dx, dy):
+        pass
+
+    def onAxisEvent(self, gamepadNum, axisName, analogValue):
+        pass

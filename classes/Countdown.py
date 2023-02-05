@@ -3,7 +3,7 @@ from core.utils.utils import Text, Gfx
 
 
 class Countdown:
-    def __init__(self,camera:Camera,timeSecondes = 1*60):
+    def __init__(self,camera:Camera,process, timeSecondes = 1*60):
         self.timeSecondes = timeSecondes
         self.camera = camera
         self.sprite = Gfx.create_fixed({
@@ -14,6 +14,7 @@ class Countdown:
         #
         self.sprite.angle = 0
         self.sprite.scale = 0.5
+        self.process = process
 
     def draw(self):
         seconds = self.timeSecondes
@@ -39,4 +40,6 @@ class Countdown:
         if(self.timeSecondes < 0):
             self.timeSecondes += 1000000000
             print("You WIN")
+            #self.process.setup()
+            self.process.selectPage(4)
         self.timeSecondes -= deltaTime

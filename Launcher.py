@@ -95,7 +95,7 @@ class MyGame(arcade.Window):
 
 
     def on_stick_motion(self,controller, name, x_value, y_value):
-        print(controller,controller.name,name,x_value,y_value)
+        #print(controller,controller.name,name,x_value,y_value)
         #leftstick-x
         #leftstick-y
         #rightstick-x
@@ -107,6 +107,13 @@ class MyGame(arcade.Window):
         if(name == "rightstick"):
             self.process.onAxisEvent(controller.name, "RX", x_value)
             self.process.onAxisEvent(controller.name, "RY", -y_value)
+
+    def on_button_press(self,controller, button_name):
+        self.process.onButtonEvent(controller.name,button_name,True)
+
+    def on_button_release(self, controller, button_name):
+        self.process.onButtonEvent(controller.name,button_name,False)
+
 
     # ----------------------------------
     # CONSTRUCTOR
@@ -128,6 +135,8 @@ class MyGame(arcade.Window):
                 for g in self.gamepads:
                     # link all gamepad callbacks to the current class methods
                     g.open()
+                    g.on_button_release = self.on_button_release
+                    g.on_button_press = self.on_button_press
                     g.on_stick_motion = self.on_stick_motion
                     # transform list into a dictionary to get its index faster
             else:

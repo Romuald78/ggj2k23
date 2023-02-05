@@ -12,7 +12,6 @@ from classes.EnemyManager import EnemyManager
 from classes.HPBar import HPBar
 from classes.Player import Player
 from classes.ProjectileManager import ProjectileManager
-from classes.Root import Root
 
 DEBUG_REMOVE_ENEMY_PROJECTILES = False
 
@@ -28,11 +27,11 @@ class Page1Home():
 
     def setup(self, config=None):
         self.camera = Camera(self.window, 0, 0, self.W, self.H)
-        self.countdown = Countdown(self.camera)
+        self.countdown = Countdown(self.camera,self.process,10)
         self.playerProjectileManager = ProjectileManager((2000,2000))
         self.enemyProjectileManager = ProjectileManager((1000,1000))
         self.player = Player(self.playerProjectileManager, initPos=(500, 500))
-        self.HPBar = HPBar(self.camera,self.player)
+        self.HPBar = HPBar(self.camera,self.player,self.process)
         self.branchMgr = BranchManager()
         self.enemyManager = EnemyManager(self.camera,
                                          self.enemyProjectileManager,
@@ -107,3 +106,6 @@ class Page1Home():
             self.player.view_x = analogValue
         if axisName == "RY":
             self.player.view_y = analogValue
+
+    def onButtonEvent(self, gamepadNum, buttonName, isPressed):
+        pass

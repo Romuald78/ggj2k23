@@ -5,7 +5,7 @@ import arcade
 from core.utils.utils import Gfx
 
 
-class Page0Splash():
+class Page2Win():
 
     def __init__(self, w, h, window: arcade.Window, process=None):
         super().__init__()
@@ -62,16 +62,8 @@ class Page0Splash():
         }
         self.enemy = Gfx.create_animated(params)
         self.enemy.scale = 1.25
-        self.initTimer = 0
         self.enemy.center_y = self.enemy.height/2
         self.enemy.center_x = self.W / 6
-        params = {
-            "filePath": "resources/images/push_start.png",
-            "position": (self.W // 2,  self.H // 2),
-            "filterColor": (255, 255, 255, 255)
-        }
-        self.push = Gfx.create_fixed(params)
-        self.push.center_y = self.H / 8
 
     def update(self, deltaTime):
         self.enemy.update_animation(deltaTime)
@@ -140,19 +132,15 @@ class Page0Splash():
         self.evilRoots.draw()
         self.fromBeyond.draw()
         self.enemy.draw()
-        if self.steps == 6 and self.timer < 1:
-            self.push.draw()
 
     def startGame(self, ctrlID):
-        self.process.selectPage(2)
+        self.process.selectPage(1)#start page
 
     def onKeyEvent(self, key, isPressed):
         if not isPressed:
             self.startGame(-1)
 
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
-        if not hasattr(self,"initTimer"):
-            return
         if not isPressed:
             self.startGame(gamepadNum)
 
@@ -161,4 +149,3 @@ class Page0Splash():
 
     def onMouseMotionEvent(self, x, y, dx, dy):
         pass
-

@@ -4,8 +4,8 @@
 from pages.page_0_intro import Page0Intro
 from pages.page_0_splash import Page0Splash
 from pages.page_1_home import Page1Home
-
-
+from pages.page_2_game_over import Page2GameOver
+from pages.page_2_win import Page2Win
 
 
 class Process:
@@ -35,6 +35,8 @@ class Process:
         self.pages.append( Page0Intro (self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
         self.pages.append( Page0Splash(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
         self.pages.append( Page1Home  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
+        self.pages.append( Page2Win   (self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
+        self.pages.append( Page2GameOver  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.window, self) )
         # Set first page
         self.pageIndex = 0
         self.currentPage = self.pages[self.pageIndex]
