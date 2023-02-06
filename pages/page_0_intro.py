@@ -1,18 +1,6 @@
-import random
 
 import arcade
 
-from classes.Branch import Branch
-from classes.BranchManager import BranchManager
-from classes.BackGround import Background
-from classes.Camera import Camera
-from classes.Collisions import CollisionMgr
-from classes.Countdown import Countdown
-from classes.EnemyManager import EnemyManager
-from classes.HPBar import HPBar
-from classes.Player import Player
-from classes.ProjectileManager import ProjectileManager
-from classes.Root import Root
 from core.utils.utils import Gfx
 
 
@@ -81,6 +69,9 @@ class Page0Intro():
             self.startGame()
 
     def onMouseMotionEvent(self, x, y, dx, dy):
+        pass
+
+    def onButtonEvent(self, gamepadNum, buttonName, isPressed):
         pass
 
     def onAxisEvent(self, gamepadNum, axisName, analogValue):

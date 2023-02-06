@@ -65,7 +65,7 @@ class Page1Home():
         #15 trop dur
         #10 level high
         #5 normal
-        for i in range(0,int(self.GLOBAL_LEVEL*3.5)):
+        for i in range(0,int(self.GLOBAL_LEVEL*1.5)-1):
             self.enemyManager.randomSpawn()
 
 
@@ -144,8 +144,8 @@ class Page1Home():
             if key == arcade.key.S:
                 self.player.moveDown(isPressed)
 
-            if self.endTime <= 0 and not isPressed:
-                self.process.selectPage(1)
+        if self.endTime <= 0 and not isPressed:
+            self.process.selectPage(1)
 
 
     def onMouseMotionEvent(self, x, y, dx, dy):

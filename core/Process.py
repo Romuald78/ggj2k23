@@ -67,30 +67,35 @@ class Process:
     ### key is taken from : arcade.key.xxx
     ### ====================================================================================================
     def onKeyEvent(self, key, isPressed):
-        self.currentPage.onKeyEvent(key, isPressed)
+        if hasattr(self, "currentPage"):
+            self.currentPage.onKeyEvent(key, isPressed)
 
     ### ====================================================================================================
     ### GAMEPAD BUTTON EVENTS
     ### buttonName can be "A", "B", "X", "Y", "LB", "RB", "VIEW", "MENU", "LSTICK", "RSTICK"
     ### ====================================================================================================
     def onButtonEvent(self, gamepadNum, buttonName, isPressed):
-        self.currentPage.onButtonEvent(gamepadNum, buttonName, isPressed)
+        if hasattr(self, "currentPage"):
+            self.currentPage.onButtonEvent(gamepadNum, buttonName, isPressed)
 
     ### ====================================================================================================
     ### GAMEPAD AXIS EVENTS
     ### axisName can be "X", "Y", "RX", "RY", "Z"
     ### ====================================================================================================
     def onAxisEvent(self, gamepadNum, axisName, analogValue):
-        self.currentPage.onAxisEvent(gamepadNum, axisName, analogValue)
+        if hasattr(self, "currentPage"):
+            self.currentPage.onAxisEvent(gamepadNum, axisName, analogValue)
 
     ### ====================================================================================================
     ### MOUSE MOTION EVENTS
     ### ====================================================================================================
     def onMouseMotionEvent(self, x, y, dx, dy):
-        self.currentPage.onMouseMotionEvent(x, y, dx, dy)
+        if hasattr(self, "currentPage"):
+            self.currentPage.onMouseMotionEvent(x, y, dx, dy)
 
     ### ====================================================================================================
     ### MOUSE BUTTON EVENTS
     ### ====================================================================================================
     def onMouseButtonEvent(self, x, y, buttonNum, isPressed):
-        self.currentPage.onMouseButtonEvent(x, y, buttonNum, isPressed)
+        if hasattr(self, "currentPage"):
+            self.currentPage.onMouseButtonEvent(x, y, buttonNum, isPressed)
